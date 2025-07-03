@@ -1,59 +1,144 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+// apps/(tabs)/_layout.tsx
+import { Redirect, router, Tabs } from 'expo-router';
+import { useAuth } from '@/context/auth-context';
+import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  Pressable,
+  Text,
+  useColorScheme,
+  Platform,
+  ViewStyle,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+function CustomHeader({
+  title,
+}: {
+  title: string;
+  navigation: any;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+  const scheme = useColorScheme();
+  const tint = scheme === 'dark' ? 'dark' : 'light';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const iconColor = tint === 'dark' ? '#fff' : '#000';
+
+  const headerStyle: ViewStyle = {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: Platform.OS === 'ios' ? 6 : 12,
+    borderBottomWidth: 0.4,
+    borderColor: tint === 'dark' ? '#444' : '#ccc',
+  };
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+    <BlurView tint={tint} intensity={90} style={headerStyle}>
+      <Text
+        style={{
+          flex: 1,
+          textAlign: 'center',
+          fontFamily: 'SpaceMono',
+          fontSize: 18,
+          color: iconColor,
+        }}
+      >
+        {title}
+      </Text>
+
+      <Pressable
+        onPress={async () => {
+          router.push('/settings')
+        }}
+        hitSlop={8}
+      >
+        <Ionicons name="settings-outline" size={24} color={iconColor} />
+      </Pressable>
+    </BlurView>
+  );
+}
+
+export default function TabsLayout() {
+  const { token, loading } = useAuth();
+
+  if (loading) return null;
+  if (!token) return <Redirect href="/auth/sign-in" />;
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Tabs
+        screenOptions={({ route, navigation }) => ({
+          header: () => (
+            <CustomHeader
+              title={
+                route.name === 'index'
+                  ? 'Accueil'
+                  : route.name === 'settings'
+                  ? 'Paramètres'
+                  : 'Profil'
+              }
+              navigation={navigation}
+            />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+          tabBarActiveTintColor: '#4f46e5',
+          tabBarInactiveTintColor: '#9ca3af',
+          tabBarStyle: {
+            borderTopWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
+            backgroundColor: 'rgba(255,255,255,0.9)',
+          },
+        })}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Accueil',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home-outline" color={color} size={size} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="profil/index"
+          options={{
+            title: 'Profil',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person-outline" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profil/edit/index"
+          options={{ href: null, title: 'Éditer le profil' }}
+        />
+
+        <Tabs.Screen
+          name="settings"
+          options={{
+            href: null,
+            title: 'Paramètres',
+          }}
+        />
+        <Tabs.Screen
+          name="products/[productId]"
+          options={{ href: null, title: "Modification produit" }}
+        />
+        <Tabs.Screen
+          name="products/edit/[productId]"
+          options={{ href: null, title: 'Éditer le produit' }}
+        />
+        <Tabs.Screen
+          name="products/delete/[productId]"
+          options={{ href: null, title: 'Éditer le produit' }}
+        />
+        <Tabs.Screen
+          name="products/add/index"
+          options={{ href: null, title: 'Ajout de produit' }}
+        />                
+      </Tabs>
+    </SafeAreaView>
   );
 }
