@@ -3,6 +3,9 @@ import { Platform, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import ButtonCard from '@/components/ui/ButtonCard';
+import { signOut } from '@/services/auth.services';
+import { router } from 'expo-router';
 
 export default function ModalScreen() {
   return (
@@ -13,6 +16,13 @@ export default function ModalScreen() {
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <ButtonCard 
+        title="Log out" 
+        onPress={() => {
+          signOut();
+          router.replace('/auth/sign-in');
+        }}
+      />
     </View>
   );
 }

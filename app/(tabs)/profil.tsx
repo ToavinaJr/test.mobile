@@ -1,14 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-
+import ButtonCard from '@/components/ui/ButtonCard';
+import { getUserDetails } from '@/services/auth.services';
+import { useEffect, useState } from 'react';
 export default function TabTwoScreen() {
+  const [userDetails, setUserDetails] = useState<any>();
+  
+  useEffect(()=> {
+    setUserDetails(userDetails);
+  });
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <ButtonCard 
+        title='Show details'
+        onPress={()=> {
+          console.log(userDetails)
+        }}
+      />
+        
     </View>
   );
 }
