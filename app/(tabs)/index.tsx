@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
+=======
+import React, { useMemo, useState, useCallback } from 'react';
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
 import {
   View,
   ActivityIndicator,
@@ -8,6 +12,7 @@ import {
   Pressable,
   ScrollView,
   Keyboard,
+<<<<<<< HEAD
   Platform,
   StyleSheet
 } from 'react-native';
@@ -18,6 +23,12 @@ import { getAllProducts, invalidateProductsCache } from '@/services/products.ser
 import { Product } from '@/types';
 import FloatingAddButton from '@/components/products/FloatingAddButton';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+=======
+} from 'react-native';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
+import ProductCard from '@/components/products/ProductCard';
+import allProducts from '@/data/products.json';
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
 
 const ProductsHeader = React.memo(
   ({
@@ -41,6 +52,10 @@ const ProductsHeader = React.memo(
         onChangeText={onChangeSearch}
         className="mb-3 rounded-2xl border border-gray-300 dark:border-gray-600 px-4 py-3 text-base shadow-sm bg-white dark:bg-gray-800 text-black dark:text-white"
       />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
       <ScrollView
         horizontal
         keyboardShouldPersistTaps="always"
@@ -50,6 +65,10 @@ const ProductsHeader = React.memo(
         {categories.map((item) => {
           const active =
             (item === 'Tous' && !selectedCategory) || item === selectedCategory;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
           return (
             <Pressable
               key={item}
@@ -69,6 +88,66 @@ const ProductsHeader = React.memo(
           );
         })}
       </ScrollView>
+<<<<<<< HEAD
+=======
+    </View>
+  )
+);
+
+export default function HomeScreen() {
+  const { loading } = useAuthGuard();
+
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState<string | null>(null);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    allProducts.forEach((p) => set.add(p.category ?? 'Autres'));
+    return ['Tous', ...Array.from(set)];
+  }, []);
+
+  const handleSelectCategory = useCallback(
+    (c: string) => {
+      setCategory(c === 'Tous' ? null : c);
+      Keyboard.dismiss();
+    },
+    []
+  );
+
+  const filtered = useMemo(
+    () =>
+      allProducts.filter((p) => {
+        const matchCat = !category ? true : p.category === category;
+        const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+        return matchCat && matchSearch;
+      }),
+    [category, search]
+  );
+
+  if (loading) return <ActivityIndicator />;
+
+  return (
+    <View className="flex-1 bg-gray-50 dark:bg-black p-2">
+      <FlatList
+        data={filtered}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <ProductCard {...item} />}
+        ListHeaderComponent={
+          <ProductsHeader
+            search={search}
+            onChangeSearch={setSearch}
+            categories={categories}
+            selectedCategory={category}
+            onSelectCategory={handleSelectCategory}
+          />
+        }
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        contentContainerStyle={{ paddingBottom: 24 }}
+        keyboardShouldPersistTaps="always"
+        showsVerticalScrollIndicator={false}
+      />
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
     </View>
   )
 );
@@ -183,8 +262,11 @@ export default function HomeScreen() {
     </GestureHandlerRootView>
   );
 }
+<<<<<<< HEAD
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { padding: 16, flexGrow: 1 },
 });
+=======
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { View, Text, Pressable, Switch } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -85,3 +86,20 @@ export default function SettingsScreen() {
     </SafeAreaView>
   );
 }
+=======
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+
+const SettingsScreen = () => {
+  return (
+    <View>
+      <Text>SettingsScreen</Text>
+      <Text>Additional Settings</Text>
+    </View>
+  )
+}
+
+export default SettingsScreen
+
+const styles = StyleSheet.create({})
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec

@@ -17,6 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+<<<<<<< HEAD
   const login = async (t: string) => {
     await storage.set('userToken', t);
     setToken(t);
@@ -25,10 +26,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const refresh = async () => {
     setLoading(true);
     const saved = await getUserToken();
+=======
+  /* -------- login (persistance + state) -------- */
+  const login = async (t: string) => {
+    await storage.set('userToken', t);    // ou SecureStore si vous préférez
+    setToken(t);
+  };
+
+  /* -------- refresh au démarrage -------- */
+  const refresh = async () => {
+    setLoading(true);
+    const saved = await getUserToken();   // récup SecureStore ou AsyncStorage
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
     setToken(saved);
     setLoading(false);
   };
 
+<<<<<<< HEAD
+=======
+  /* -------- signOut -------- */
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
   const signOut = async () => {
     await signOutService();
     setToken(null);
@@ -41,4 +58,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
