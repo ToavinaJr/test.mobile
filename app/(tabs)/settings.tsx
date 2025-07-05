@@ -77,7 +77,7 @@ export default function SettingsScreen() {
           label="Déconnexion"
           onPress={async () => {
             await signOut();
-            await refresh(); // réinitialise le contexte
+            await refresh();
             router.replace('/auth/sign-in');
           }}
         />

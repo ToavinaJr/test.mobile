@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { router, RelativePathString } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useAddProduct } from '@/hooks/useAddProduct';
+import { useAddProduct } from '@/hooks/product/useAddProduct';
 import InputTextCard from '@/components/ui/InputTextCard';
 import { ProductCategory } from '@/types/ProductCategory';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

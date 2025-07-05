@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ProductCategory } from '@/types/ProductCategory';
 
-export const addProductSchema = z.object({
+export const editProductSchema = z.object({
   name: z
     .string()
     .min(2, "Le nom du produit doit contenir au moins 2 caractères.")
@@ -45,4 +45,4 @@ export const addProductSchema = z.object({
   isActive: z.boolean(),
 });
 
-export type AddProductFormInput = z.infer<typeof addProductSchema>;
+export type EditProductFormInput = z.infer<typeof editProductSchema>;

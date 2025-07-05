@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { signOut } from '@/services/auth.services';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/auth-context';
-import { useProfile } from '@/hooks/useProfile';
+import { useProfile } from '@/hooks/profil/useProfile';
 
 export default function ProfilScreen() {
   const router = useRouter();

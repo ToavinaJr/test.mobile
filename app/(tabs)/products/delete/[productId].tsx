@@ -1,43 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Alert, ActivityIndicator, Pressable } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, ActivityIndicator, Pressable } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { getProductById, deleteProductById } from '@/services/products.services';
-import { Product } from '@/types';
+import { useDeleteProduct } from '@/hooks/product/useDeleProduct';
 
 const DeleteProductScreen = () => {
   const router = useRouter();
   const { productId } = useLocalSearchParams();
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
+  const { product, loading, deleting, deleteError, handleDelete, deleteSuccess } = useDeleteProduct(productId);
 
   useEffect(() => {
-    if (!productId) return;
-    getProductById(productId as string)
-      .then(setProduct)
-      .finally(() => setLoading(false));
-  }, [productId]);
-
-  const handleDelete = async () => {
-    if (!product) return;
-
-    setDeleting(true);
-    try {
-      await deleteProductById(product.id);
-      Alert.alert('Succès', `Le produit "${product.name}" a été supprimé.`);
-      router.replace(`/?refresh=${Date.now()}`);
-    } catch (error) {
-      Alert.alert('Erreur', 'Impossible de supprimer le produit.');
-      console.error(error);
-    } finally {
-      setDeleting(false);
+    if (deleteSuccess) {
+      router.replace('/');
     }
-  };
+  }, [deleteSuccess, router]);
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
+      <View className="flex-1 justify-center items-center bg-white dark:bg-black">
         <ActivityIndicator size="large" color="#ef4444" />
       </View>
     );
@@ -45,22 +25,22 @@ const DeleteProductScreen = () => {
 
   if (!product) {
     return (
-      <View className="flex-1 justify-center items-center bg-white px-6">
-        <Text className="text-lg text-gray-700 mb-6">Produit introuvable.</Text>
+      <View className="flex-1 justify-center items-center bg-white dark:bg-black px-6">
+        <Text className="text-lg text-gray-700 dark:text-gray-300 mb-6">Produit introuvable.</Text>
         <Pressable
           onPress={() => router.back()}
-          className="bg-gray-300 px-6 py-3 rounded-md"
+          className="bg-gray-300 dark:bg-gray-700 px-6 py-3 rounded-md"
           android_ripple={{ color: '#ddd' }}
         >
-          <Text className="text-gray-800 font-semibold text-center">Retour</Text>
+          <Text className="text-gray-800 dark:text-gray-100 font-semibold text-center">Retour</Text>
         </Pressable>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-white px-6 py-10 justify-center">
-      <Text className="text-2xl font-semibold text-gray-900 mb-4 text-center">
+    <View className="flex-1 bg-white dark:bg-black px-6 py-10 justify-center">
+      <Text className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
         Confirmer la suppression
       </Text>
 
@@ -72,7 +52,7 @@ const DeleteProductScreen = () => {
         onPress={handleDelete}
         disabled={deleting}
         className={`rounded-md py-4 mb-6 ${
-          deleting ? 'bg-red-300' : 'bg-red-600'
+          deleting ? 'bg-red-300' : 'bg-red-600 active:bg-red-700'
         }`}
         android_ripple={{ color: '#b91c1c' }}
       >
@@ -84,13 +64,17 @@ const DeleteProductScreen = () => {
       <Pressable
         onPress={() => router.back()}
         disabled={deleting}
-        className={`rounded-md py-4 border border-gray-400 ${
-          deleting ? 'bg-gray-200' : 'bg-white'
+        className={`rounded-md py-4 border border-gray-400 dark:border-gray-600 ${
+          deleting ? 'bg-gray-200 dark:bg-gray-700' : 'bg-white dark:bg-black'
         }`}
         android_ripple={{ color: '#eee' }}
       >
-        <Text className="text-gray-700 font-semibold text-center text-lg">Annuler</Text>
+        <Text className="text-gray-700 dark:text-gray-100 font-semibold text-center text-lg">Annuler</Text>
       </Pressable>
+
+      {deleteError && (
+        <Text className="text-red-500 text-center mt-4">{deleteError}</Text>
+      )}
     </View>
   );
 };

@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
-export default function FloatingAddButton() {
+export default function FloatingButton({children}: {children?: React.ReactNode}) {
   const x = useSharedValue(20);
   const y = useSharedValue(550);
 
@@ -39,14 +39,7 @@ export default function FloatingAddButton() {
         style={style}
         className="absolute z-50"
       >
-        <Ionicons.Button
-          name="add"
-          backgroundColor="#4f46e5"
-          borderRadius={9999}
-          size={40}
-          onPress={() => router.push('/products/add')}
-          iconStyle={{ marginRight: 0 }}
-        />
+        {children}
       </Animated.View>
     </PanGestureHandler>
   );

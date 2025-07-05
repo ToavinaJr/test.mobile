@@ -1,43 +1,46 @@
-// ✨ PaginationButton.tsx
+// components/ui/PaginationButton.tsx
 import React from 'react';
-import { Pressable, Text, ViewStyle } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
 type Props = {
   label: string | number;
   onPress: () => void;
-  disabled?: boolean;
   active?: boolean;
-  style?: ViewStyle;
+  disabled?: boolean;
+  compact?: boolean;          // pour les flèches ◀ ▶
 };
 
 const PaginationButton: React.FC<Props> = ({
   label,
   onPress,
-  disabled = false,
   active = false,
-  style,
+  disabled = false,
+  compact = false,
 }) => (
   <Pressable
     onPress={onPress}
     disabled={disabled}
-    // Animation “scale down” au clic
     style={({ pressed }) => [
       {
-        transform: [{ scale: pressed ? 0.96 : 1 }],
+        opacity: disabled ? 0.5 : 1,
+        backgroundColor: active ? '#4f46e5' : 'gray',
       },
-      style,
+      { transform: [{ scale: pressed && !disabled ? 0.94 : 1 }] },
     ]}
     className={`
-      mx-1 overflow-hidden rounded-full
-      ${disabled ? 'opacity-40' : 'active:opacity-80'}
-      shadow-lg shadow-black/5
+      mx-1 overflow-hidden rounded-full shadow
+      ${compact ? 'px-3 py-2' : 'px-5 py-3'}
+      ${disabled
+        ? 'bg-gray-300 dark:bg-gray-600 opacity-50'
+        : active
+        ? 'bg-indigo-700'
+        : 'bg-gray-200 dark:bg-gray-700'}
     `}
   >
     <Text
       className={`
-        px-5 py-2 text-sm font-bold
-        ${active ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100'}
-        ${disabled ? '' : 'dark:bg-gray-600'}
+        text-sm font-bold
+        ${active ? 'text-white' : 'text-gray-800 dark:text-gray-100'}
       `}
     >
       {label}

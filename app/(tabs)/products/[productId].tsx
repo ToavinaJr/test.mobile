@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useProductDetail } from '@/hooks/useProductDetail';
+import { useProductDetail } from '@/hooks/product/useProductDetail';
 
 export default function ProductDetail() {
   const router = useRouter();

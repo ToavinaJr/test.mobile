@@ -1,3 +1,4 @@
+// app/(tabs)/index.tsx
 import React, { useCallback } from 'react';
 import {
   View,
@@ -10,12 +11,14 @@ import {
   Keyboard,
   StyleSheet
 } from 'react-native';
-import { useAuthGuard } from '@/hooks/useAuthGuard';
+import { useAuthGuard } from '@/hooks/auth/useAuthGuard';
 import ProductCard from '@/components/products/ProductCard';
 import { router } from 'expo-router';
-import FloatingAddButton from '@/components/products/FloatingAddButton';
+import FloatingAddButton from '@/components/products/FloatingButton';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useProducts } from '@/hooks/useProducts';
+import { useProducts } from '@/hooks/product/useProducts';
+import { Ionicons } from '@expo/vector-icons';
+import PaginationButton from '@/components/ui/PaginationButton';
 
 const ProductsHeader = React.memo(
   ({
@@ -98,55 +101,46 @@ export default function HomeScreen() {
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
-
+  
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+  
     return (
-      <View className="flex-row justify-center items-center mt-6 mb-8 px-4">
-        <Pressable
+      <View className="flex-row items-center justify-center my-6 px-3">
+        {/* ◀ Précédent */}
+        <PaginationButton
+          label="◀"
           onPress={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`flex-1 py-3 rounded-xl shadow-md ${
-            currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600'
-          } items-center`}
-        >
-          <Text className="text-white font-semibold text-base">Précédent</Text>
-        </Pressable>
-
+          compact
+        />
+  
+        {/* Pages */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 8 }}
-          className="max-w-[40%]" // Limit width for smaller screens
+          contentContainerStyle={{ alignItems: 'center' }}
+          className="flex-grow px-2"
         >
           {pages.map((page) => (
-            <Pressable
+            <PaginationButton
               key={page}
+              label={page}
               onPress={() => handlePageChange(page)}
-              className={`mx-1 px-4 py-2 rounded-full ${
-                currentPage === page ? 'bg-indigo-800' : 'bg-gray-200 dark:bg-gray-700'
-              }`}
-            >
-              <Text className={`font-semibold text-sm ${currentPage === page ? 'text-white' : 'text-gray-800 dark:text-gray-100'}`}>
-                {page}
-              </Text>
-            </Pressable>
+              active={page === currentPage}
+            />
           ))}
         </ScrollView>
-
-        <Pressable
+  
+        {/* ▶ Suivant */}
+        <PaginationButton
+          label="▶"
           onPress={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`flex-1 py-3 rounded-xl shadow-md ${
-            currentPage === totalPages ? 'bg-gray-300' : 'bg-indigo-600'
-          } items-center`}
-        >
-          <Text className="text-white font-semibold text-base">Suivant</Text>
-        </Pressable>
+          compact
+        />
       </View>
     );
   };
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <View className="flex-1 bg-gray-50 dark:bg-black p-2">
@@ -194,7 +188,16 @@ export default function HomeScreen() {
         }
       />
 
-      <FloatingAddButton />
+      <FloatingAddButton>
+        <Ionicons.Button
+            name="add"
+            backgroundColor="#4f46e5"
+            borderRadius={9999}
+            size={40}
+            onPress={() => router.push('/products/add')}
+            iconStyle={{ marginRight: 0 }}
+          />
+      </FloatingAddButton>
     </View>
     </GestureHandlerRootView>
   );
