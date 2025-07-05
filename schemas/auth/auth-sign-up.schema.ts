@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+// Schemas de validation pour le formulaire d'inscription
 export const signUpFieldSchemas = {
   name: z
     .string()
