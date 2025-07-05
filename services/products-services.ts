@@ -1,6 +1,6 @@
 import { Product } from '@/types';
 import allProducts from '@/data/products.json';
-import { storage } from './storage.services';
+import { storage } from './storage-services';
 
 const INDEX_KEY = 'products:index';
 const ENTITY_KEY = (id: string) => `product:${id}`;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getUserDetails } from '@/services/auth.services';
+import { getUserDetails } from '@/services/auth-services';
 import { useFocusEffect } from '@react-navigation/native';
 
 interface UserProfile {

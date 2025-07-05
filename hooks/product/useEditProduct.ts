@@ -8,7 +8,7 @@ import { EditProductFormInput, editProductSchema } from '@/schemas/product/produ
 import { updateExistingProduct } from '@/store/product-slice';
 import { AppDispatch, RootState } from '@/store';
 import { Product, ProductCategory } from '@/types';
-import { getProductById } from '@/services/products.services';
+import { getProductById } from '@/services/products-services';
 
 export const useEditProduct = (productId: string | string[] | undefined) => {
   const dispatch = useDispatch<AppDispatch>();

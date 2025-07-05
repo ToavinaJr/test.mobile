@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { Product } from '@/types';
-import { getProductById } from '@/services/products.services';
+import { getProductById } from '@/services/products-services';
 
 export const useProductDetail = (productId: string | string[] | undefined) => {
   const allProductsInStore = useSelector((state: RootState) => state.products.products);

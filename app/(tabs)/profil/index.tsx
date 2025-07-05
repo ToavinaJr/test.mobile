@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { signOut } from '@/services/auth.services';
+import { signOut } from '@/services/auth-services';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/auth-context';
 import { useProfile } from '@/hooks/profil/useProfile';

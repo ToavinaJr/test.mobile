@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteProduct as deleteProductAction } from '@/store/product-slice';
 import { AppDispatch, RootState } from '@/store';
 import { Product } from '@/types';
-import { getProductById } from '@/services/products.services';
+import { getProductById } from '@/services/products-services';
 import { Alert } from 'react-native';
 
 export const useDeleteProduct = (productId: string | string[] | undefined) => {

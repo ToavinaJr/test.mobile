@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getUserToken, getUserDetails, signOut as signOutService } from '@/services/auth.services';
+import { getUserToken, getUserDetails, signOut as signOutService } from '@/services/auth-services';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInitialAuth, signOutUser } from '@/store/auth-slice';
 import { AppDispatch, RootState } from '@/store';

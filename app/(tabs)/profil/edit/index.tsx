@@ -7,7 +7,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getUserDetails, updateUser } from '@/services/auth.services';
+import { getUserDetails, updateUser } from '@/services/auth-services';
 import { useRouter } from 'expo-router';
 import { ZodError } from 'zod';
 import { editProfileSchema, EditProfileFormInput } from '@/schemas/profil/profil-edit.schema'

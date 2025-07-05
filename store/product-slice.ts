@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { getAllProducts, invalidateProductsCache, addProduct, updateProductById, deleteProductById } from '@/services/products.services';
+import { getAllProducts, invalidateProductsCache, addProduct, updateProductById, deleteProductById } from '@/services/products-services';
 import { Product } from '@/types';
 
 interface ProductState {

@@ -3,7 +3,7 @@ import { View, Text, Pressable, Switch } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { signOut } from '@/services/auth.services';
+import { signOut } from '@/services/auth-services';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useAuth } from '@/context/auth-context';
 

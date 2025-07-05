@@ -1,5 +1,5 @@
 import { SignInFormData, SignUpFormData, User } from '@/types';
-import { storage } from './storage.services';
+import { storage } from './storage-services';
 
 const USERS_KEY = 'allUsers';
 const TOKEN_KEY = 'userToken';

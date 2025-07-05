@@ -1,7 +1,7 @@
 // store/auth-slice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { SignInFormData, SignUpFormData, AuthUser } from '@/types'; // Import SignUpFormData
-import { signIn as signInService, signUp as signUpService, signOut as signOutService } from '@/services/auth.services'; // Import signUp service
+import { signIn as signInService, signUp as signUpService, signOut as signOutService } from '@/services/auth-services'; // Import signUp service
 
 interface AuthState {
   token: string | null;
