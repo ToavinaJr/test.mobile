@@ -1,20 +1,26 @@
 // store/auth-slice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { SignInFormData, SignUpFormData, AuthUser } from '@/types'; // Import SignUpFormData
-import { signIn as signInService, signUp as signUpService, signOut as signOutService } from '@/services/auth-services'; // Import signUp service
+import { SignInFormData, SignUpFormData, AuthUser } from '@/types'; 
+import { signIn as signInService, signUp as signUpService, signOut as signOutService } from '@/services/auth-services'; 
 
+/**
+ * Interface décrivant la forme du state d'authentification
+ */
 interface AuthState {
-  token: string | null;
-  user: AuthUser | null;
-  isSigningIn: boolean;
-  signInError: string | null;
-  isSigningOut: boolean;
-  signOutError: string | null;
-  isSigningUp: boolean; // New state for sign-up loading
-  signUpError: string | null; // New state for sign-up error
-  signUpSuccess: boolean; // New state for sign-up success
+  token: string | null;               // Token d'authentification JWT ou équivalent
+  user: AuthUser | null;              // Objet utilisateur authentifié
+  isSigningIn: boolean;               // Indicateur de chargement pendant la connexion
+  signInError: string | null;         // Message d'erreur lors de la connexion
+  isSigningOut: boolean;              // Indicateur de chargement pendant la déconnexion
+  signOutError: string | null;        // Message d'erreur lors de la déconnexion
+  isSigningUp: boolean;               // Indicateur de chargement pendant l'inscription
+  signUpError: string | null;         // Message d'erreur lors de l'inscription
+  signUpSuccess: boolean;              // Indicateur de succès de l'inscription
 }
 
+/**
+ * État initial par défaut du slice auth
+ */
 const initialState: AuthState = {
   token: null,
   user: null,
@@ -22,11 +28,18 @@ const initialState: AuthState = {
   signInError: null,
   isSigningOut: false,
   signOutError: null,
-  isSigningUp: false, // Initialize new state
-  signUpError: null,  // Initialize new state
-  signUpSuccess: false, // Initialize new state
+  isSigningUp: false,
+  signUpError: null,
+  signUpSuccess: false,
 };
 
+/**
+ * AsyncThunk pour la connexion utilisateur
+ * - Prend les données {email, password}
+ * - Appelle le service signInService
+ * - En cas de succès, retourne token et user
+ * - Sinon, rejette avec un message d'erreur
+ */
 export const signInUser = createAsyncThunk(
   'auth/signIn',
   async ({ email, password }: SignInFormData, { rejectWithValue }) => {
@@ -44,7 +57,13 @@ export const signInUser = createAsyncThunk(
   }
 );
 
-// Async Thunk for Sign Up
+/**
+ * AsyncThunk pour l'inscription utilisateur
+ * - Prend les données d'inscription (SignUpFormData)
+ * - Appelle le service signUpService
+ * - En cas de succès, retourne les infos utilisateur (pas de token ici)
+ * - Sinon, rejette avec message d'erreur
+ */
 export const signUpUser = createAsyncThunk(
   'auth/signUp',
   async (data: SignUpFormData, { rejectWithValue }) => {
@@ -52,7 +71,6 @@ export const signUpUser = createAsyncThunk(
       const response = await signUpService(data);
 
       if (response.success && response.user) {
-        // We don't get a token directly from signUp service, but user details are returned
         return response.user;
       } else {
         return rejectWithValue(response.message || 'Échec de l’inscription.');
@@ -63,7 +81,12 @@ export const signUpUser = createAsyncThunk(
   }
 );
 
-
+/**
+ * AsyncThunk pour la déconnexion utilisateur
+ * - Appelle le service signOutService
+ * - En cas de succès, retourne true
+ * - Sinon, rejette avec message d'erreur
+ */
 export const signOutUser = createAsyncThunk(
   'auth/signOut',
   async (_, { rejectWithValue }) => {
@@ -76,24 +99,43 @@ export const signOutUser = createAsyncThunk(
   }
 );
 
+/**
+ * Création du slice auth avec createSlice
+ * - Contient le state initial, les reducers synchrones, et les extraReducers pour gérer les thunks
+ */
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    /**
+     * Efface toutes les erreurs liées à l'authentification (connexion, déconnexion, inscription)
+     */
     clearAuthError: (state) => {
       state.signInError = null;
       state.signOutError = null;
-      state.signUpError = null; // Clear sign-up specific error
+      state.signUpError = null;
     },
+    /**
+     * Réinitialise l'indicateur de succès d'inscription
+     */
     clearSignUpSuccess: (state) => {
-      state.signUpSuccess = false; // Clear sign-up success state
+      state.signUpSuccess = false;
     },
+    /**
+     * Met à jour le token dans le state (utile si on récupère un token externe)
+     */
     setAuthToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
     },
+    /**
+     * Met à jour les infos utilisateur dans le state
+     */
     setAuthUser: (state, action: PayloadAction<AuthUser | null>) => {
       state.user = action.payload;
     },
+    /**
+     * Permet d'initialiser simultanément token et user (par exemple au démarrage de l'app)
+     */
     setInitialAuth: (state, action: PayloadAction<{ token: string | null; user: AuthUser | null }>) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
@@ -101,7 +143,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Sign In
+      // Gestion des états du thunk signInUser
       .addCase(signInUser.pending, (state) => {
         state.isSigningIn = true;
         state.signInError = null;
@@ -118,7 +160,8 @@ const authSlice = createSlice({
         state.user = null;
         state.signInError = action.payload as string;
       })
-      // Sign Up
+
+      // Gestion des états du thunk signUpUser
       .addCase(signUpUser.pending, (state) => {
         state.isSigningUp = true;
         state.signUpError = null;
@@ -126,7 +169,7 @@ const authSlice = createSlice({
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
         state.isSigningUp = false;
-        // For sign-up, we just confirm success; no token is set here
+        // Ici on ne reçoit pas de token, seulement la confirmation que l'inscription a réussi
         state.signUpSuccess = true;
         state.signUpError = null;
       })
@@ -135,7 +178,8 @@ const authSlice = createSlice({
         state.signUpSuccess = false;
         state.signUpError = action.payload as string;
       })
-      // Sign Out
+
+      // Gestion des états du thunk signOutUser
       .addCase(signOutUser.pending, (state) => {
         state.isSigningOut = true;
         state.signOutError = null;
@@ -153,6 +197,8 @@ const authSlice = createSlice({
   },
 });
 
+// Export des actions synchrones définies dans reducers
 export const { clearAuthError, clearSignUpSuccess, setAuthToken, setAuthUser, setInitialAuth } = authSlice.actions;
 
+// Export du reducer à utiliser dans le store
 export default authSlice.reducer;

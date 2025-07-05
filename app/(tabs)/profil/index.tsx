@@ -1,9 +1,20 @@
+/**
+ * ProfilScreen
+ * ---------------------------------------------------------------------------
+ * Écran affichant les informations du profil utilisateur connecté.
+ * - Récupère les données utilisateur via un hook personnalisé useProfile.
+ * - Affiche loader pendant la récupération.
+ * - Affiche une erreur si impossible de charger le profil.
+ * - Permet d’accéder à la modification du profil et à la liste des produits.
+ * - Offre une fonctionnalité de déconnexion.
+ */
+
 import {
   View,
   Text,
   Pressable,
   ActivityIndicator,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,10 +24,16 @@ import { useAuth } from '@/context/auth-context';
 import { useProfile } from '@/hooks/profil/useProfile';
 
 export default function ProfilScreen() {
+  // Accès à la navigation avec Expo Router
   const router = useRouter();
+
+  // Contexte d’authentification pour forcer le rafraîchissement après déconnexion
   const { refresh } = useAuth();
+
+  // Hook personnalisé pour récupérer l’utilisateur et l’état de chargement
   const { user, loading } = useProfile();
 
+  // Affichage d’un loader pendant la récupération des données utilisateur
   if (loading)
     return (
       <SafeAreaView className="flex-1 items-center justify-center bg-gray-100 dark:bg-zinc-950">
@@ -24,6 +41,7 @@ export default function ProfilScreen() {
       </SafeAreaView>
     );
 
+  // Gestion du cas où aucun utilisateur n’est récupéré (erreur ou session expirée)
   if (!user)
     return (
       <SafeAreaView className="flex-1 items-center justify-center bg-gray-100 dark:bg-zinc-950">
@@ -33,12 +51,15 @@ export default function ProfilScreen() {
       </SafeAreaView>
     );
 
+  // Extraction de la première lettre du nom pour affichage en avatar
   const initial = user.name?.[0]?.toUpperCase() ?? '?';
 
   return (
     <SafeAreaView className="flex-1 bg-gray-100 dark:bg-zinc-950">
+      {/* Configuration de la barre de statut pour harmoniser le design */}
       <StatusBar barStyle="light-content" backgroundColor="#4f46e5" animated />
 
+      {/* Section avatar + nom + email */}
       <View className="items-center mt-12 mb-8 px-6">
         <View className="w-32 h-32 rounded-full bg-indigo-600 items-center justify-center shadow-lg border-2 border-white dark:border-zinc-800">
           <Text className="text-white text-5xl font-extrabold">{initial}</Text>
@@ -52,14 +73,17 @@ export default function ProfilScreen() {
         </Text>
       </View>
 
+      {/* Menu des actions disponibles */}
       <View className="flex-1 px-4">
         <View className="bg-white dark:bg-zinc-900 rounded-2xl p-4 shadow-md space-y-3">
+          {/* Item pour modifier le profil */}
           <ListItem
             icon="create-outline"
             label="Modifier le profil"
             onPress={() => router.push('/profil/edit')}
           />
 
+          {/* Item pour accéder à la liste des produits */}
           <ListItem
             icon="cube-outline"
             label="Mes produits"
@@ -67,11 +91,12 @@ export default function ProfilScreen() {
           />
         </View>
 
+        {/* Bouton déconnexion */}
         <Pressable
           onPress={async () => {
-            await signOut();
-            await refresh();
-            router.replace('/auth/sign-in');
+            await signOut();    // Appel du service de déconnexion
+            await refresh();    // Rafraîchissement du contexte d’authentification
+            router.replace('/auth/sign-in'); // Redirection vers la page de connexion
           }}
           className="mt-6 flex-row items-center justify-center px-5 py-4 rounded-2xl bg-red-500 shadow-md"
         >
@@ -83,6 +108,18 @@ export default function ProfilScreen() {
   );
 }
 
+/**
+ * ListItem
+ * ---------------------------------------------------------------------------
+ * Composant réutilisable pour un item de liste cliquable avec icône.
+ * Props :
+ * - icon : nom de l’icône Ionicons.
+ * - label : texte affiché.
+ * - onPress : callback quand l’item est pressé.
+ * - containerCls : classes supplémentaires CSS Tailwind pour le container.
+ * - labelCls : classes CSS pour le label.
+ * - iconColor : couleur de l’icône.
+ */
 function ListItem({
   icon,
   label,

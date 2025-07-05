@@ -18,6 +18,7 @@ import { ProductCategory } from '@/types/ProductCategory';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function ProductAddScreen() {
+  // Hook personnalisé pour gérer le formulaire d'ajout de produit
   const {
     form,
     imageUri,
@@ -29,14 +30,17 @@ export default function ProductAddScreen() {
     resetForm,
   } = useAddProduct();
 
+  // Réinitialise le formulaire à chaque montage du composant
   useEffect(() => {
     resetForm();
   }, []);
 
+  // Gestion de la soumission du formulaire
   const handleSave = async () => {
     const result = await handleSubmit();
     if (result.success) {
       resetForm();
+      // Redirige vers la page d'accueil avec un paramètre pour forcer le refresh
       router.replace(`/(tabs)/?refresh=${Date.now()}` as RelativePathString);
     }
   };
@@ -45,6 +49,7 @@ export default function ProductAddScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Overlay de chargement pendant l'ajout du produit */}
       {addingProduct && (
         <View style={styles.overlay}>
           <ActivityIndicator size="large" color="#ffffff" />
@@ -52,6 +57,7 @@ export default function ProductAddScreen() {
         </View>
       )}
 
+      {/* ScrollView intelligent qui gère le clavier */}
       <KeyboardAwareScrollView
         className="flex-1 bg-gray-50 dark:bg-zinc-900 p-4"
         keyboardShouldPersistTaps="always"
@@ -60,6 +66,7 @@ export default function ProductAddScreen() {
         enableAutomaticScroll
       >
         <View>
+          {/* En-tête avec bouton retour */}
           <View className="flex-row items-center mb-6">
             <Pressable onPress={() => router.back()} className="p-2 mr-2">
               <Ionicons name="arrow-back" size={20} color="#4f46e5" />
@@ -69,6 +76,7 @@ export default function ProductAddScreen() {
             </Text>
           </View>
 
+          {/* Image du produit ou icône par défaut */}
           <View className="items-center mb-6">
             <Pressable
               onPress={pickImage}
@@ -88,6 +96,7 @@ export default function ProductAddScreen() {
             )}
           </View>
 
+          {/* Champ : nom du produit */}
           <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1">Nom du produit</Text>
           <InputTextCard
             title="Nom du produit"
@@ -98,6 +107,7 @@ export default function ProductAddScreen() {
             messageStatus={errors.name}
           />
 
+          {/* Champ : description */}
           <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1 mt-4">Description</Text>
           <InputTextCard
             title="Description"
@@ -109,6 +119,7 @@ export default function ProductAddScreen() {
             style="h-28"
           />
 
+          {/* Champs : prix et stock en ligne */}
           <View className="flex-row gap-4 mt-4">
             <View className="flex-1">
               <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1">Prix (€)</Text>
@@ -136,6 +147,7 @@ export default function ProductAddScreen() {
             </View>
           </View>
 
+          {/* Champ : vendeur */}
           <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1 mt-4">Vendeur</Text>
           <InputTextCard
             title="Vendeur"
@@ -146,6 +158,7 @@ export default function ProductAddScreen() {
             messageStatus={errors.vendor}
           />
 
+          {/* Champ : catégorie */}
           <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1 mt-4">Catégorie</Text>
           <ScrollView
             horizontal
@@ -183,6 +196,7 @@ export default function ProductAddScreen() {
           )}
           {!errors.category && <View className="h-6" />}
 
+          {/* Toggle pour activer/désactiver le produit */}
           <View className="flex-row justify-between items-center bg-white dark:bg-zinc-800 rounded-xl px-4 py-3 mt-4 mb-8 shadow-sm">
             <Text className="text-base text-gray-800 dark:text-gray-100 font-medium">
               Produit actif
@@ -195,6 +209,7 @@ export default function ProductAddScreen() {
             />
           </View>
 
+          {/* Bouton de soumission */}
           <Pressable
             disabled={addingProduct}
             onPress={handleSave}
@@ -212,6 +227,7 @@ export default function ProductAddScreen() {
   );
 }
 
+// Style pour l’overlay de chargement
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
