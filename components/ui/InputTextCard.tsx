@@ -30,7 +30,7 @@ const InputTextCard = ({
     isValid = true,
     type = 'text',
     keyboardType = 'default',
-    onBlur, // Récupération de la prop onBlur
+    onBlur, 
 }: InputTextCardProps) => {
   const [secure, setSecure] = React.useState(secureTextEntry);
 

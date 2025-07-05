@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/store';
-import { fetchProducts, setSearch, setSelectedCategory } from '@/store/product-slice';
+import { fetchProducts, setSearch, setSelectedCategory, setCurrentPage } from '@/store/product-slice';
 import { Product } from '@/types';
 import { useLocalSearchParams } from 'expo-router';
 
 export const useProducts = () => {
-  const { products, loading, error, search, selectedCategory } = useSelector(
+  const { products, loading, error, search, selectedCategory, currentPage, itemsPerPage, totalProducts } = useSelector(
     (state: RootState) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +27,8 @@ export const useProducts = () => {
     return ['Tous', ...Array.from(set)];
   }, [products]);
 
-  const filteredProducts = useMemo(
+  // Appliquer le filtrage avant la pagination
+  const filteredAndSearchedProducts = useMemo(
     () =>
       products.filter((p) => {
         const matchCat = !selectedCategory ? true : p.category === selectedCategory;
@@ -36,6 +37,17 @@ export const useProducts = () => {
       }),
     [selectedCategory, search, products]
   );
+
+  // Appliquer la pagination sur les produits filtrés
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredAndSearchedProducts.slice(startIndex, endIndex);
+  }, [currentPage, itemsPerPage, filteredAndSearchedProducts]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredAndSearchedProducts.length / itemsPerPage);
+  }, [filteredAndSearchedProducts.length, itemsPerPage]);
 
   const handleSearchChange = useCallback(
     (value: string) => {
@@ -51,15 +63,27 @@ export const useProducts = () => {
     [dispatch]
   );
 
+  const handlePageChange = useCallback(
+    (page: number) => {
+      dispatch(setCurrentPage(page));
+    },
+    [dispatch]
+  );
+
   return {
-    products,
+    products: paginatedProducts, // Retourne les produits paginés
     loading,
     error,
     search,
     selectedCategory,
     categories,
-    filteredProducts,
+    filteredProducts: filteredAndSearchedProducts, // Retourne tous les produits filtrés (utile pour le total)
+    currentPage,
+    itemsPerPage,
+    totalPages,
+    totalFilteredProducts: filteredAndSearchedProducts.length, // Total des produits après filtrage
     handleSearchChange,
     handleCategorySelect,
+    handlePageChange,
   };
 };

@@ -76,10 +76,10 @@ export default function SignInScreen() {
         <View className="flex-1 justify-center items-center">
           <Ionicons name="lock-closed-outline" size={64} color="#4f46e5" />
           <Text className="mt-4 text-3xl font-extrabold text-blue-800">
-            Bienvenue !
+            Bienvenue !
           </Text>
           <Text className="text-base text-gray-600 mb-8 text-center">
-            Connectez‑vous pour continuer
+            Connectez-vous pour continuer
           </Text>
 
           <View className="w-full max-w-md">

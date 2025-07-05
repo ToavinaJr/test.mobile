@@ -1,6 +1,6 @@
 // schemas/product/product-add.schema.ts
 import { z } from 'zod';
-import { ProductCategory } from '@/types/ProductCategory'; // Importez votre enum
+import { ProductCategory } from '@/types/ProductCategory';
 
 export const addProductSchema = z.object({
   name: z
@@ -26,7 +26,7 @@ export const addProductSchema = z.object({
       invalid_type_error: "Le stock doit être un nombre entier.",
     })
     .int("Le stock doit être un nombre entier.")
-    .min(0, "Le stock ne peut pas être négatif."),
+    .min(1, "Le stock doit au minimum être 1."),
 
   vendor: z
     .string()

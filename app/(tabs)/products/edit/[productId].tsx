@@ -1,3 +1,4 @@
+// app/
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -13,7 +14,6 @@ import {
 } from 'react-native';
 import {
   RelativePathString,
-  Stack,
   useLocalSearchParams,
   useRouter,
 } from 'expo-router';
@@ -26,24 +26,14 @@ import { Product } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
 import { ProductCategory } from '@/types/ProductCategory';
 
-/* ------------------------------------------------------------------ */
-/* Overlay visuel pendant la sauvegarde                               */
-/* ------------------------------------------------------------------ */
 const SavingOverlay = () => (
   <View style={styles.overlay}>
     <ActivityIndicator size="large" />
   </View>
 );
 
-/* ------------------------------------------------------------------ */
-/* Utils                                                              */
-/* ------------------------------------------------------------------ */
 const sanitize = (str: string) => str.trim();
 
-/**
- * Compare seulement les clés réellement présentes dans `b`
- * (celles que l’on va envoyer au backend).
- */
 const shallowEqual = (a: Partial<Product>, b: Partial<Product>) => {
   for (const k of Object.keys(b) as (keyof Product)[]) {
     if (a[k] !== b[k]) return false;
@@ -51,18 +41,13 @@ const shallowEqual = (a: Partial<Product>, b: Partial<Product>) => {
   return true;
 };
 
-/* ------------------------------------------------------------------ */
-/* Component                                                          */
-/* ------------------------------------------------------------------ */
 export default function ProductEditScreen() {
   const router = useRouter();
   const { productId } = useLocalSearchParams<{ productId: string }>();
 
-  /* ------------------------ UX ------------------------ */
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  /* --------------------- formulaires ------------------ */
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priceStr, setPriceStr] = useState('');
@@ -72,10 +57,8 @@ export default function ProductEditScreen() {
   const [imageUrl, setImageUrl] = useState('');
   const [isActive, setIsActive] = useState(true);
 
-  /* ------------------- produit original -------------- */
   const originalRef = useRef<Product | null>(null);
 
-  /* ------------------- chargement --------------------- */
   useEffect(() => {
     if (!productId) return;
 
@@ -91,7 +74,7 @@ export default function ProductEditScreen() {
         setPriceStr(String(p.price ?? ''));
         setStockStr(String(p.stock ?? ''));
         setCategory(p.category ?? '');
-        setVendor(p.vendor ?? '');          // <-- vendor propre
+        setVendor(p.vendor ?? '');
         setImageUrl(p.imageUrl ?? '');
         setIsActive(p.isActive ?? true);
       } catch (err) {
@@ -104,13 +87,11 @@ export default function ProductEditScreen() {
     })();
   }, [productId]);
 
-  /* ------------------- sauvegarde --------------------- */
   const handleSave = async () => {
     if (!productId) return;
 
     Keyboard.dismiss();
 
-    /* validation simple */
     if (!sanitize(name)) {
       Alert.alert('Validation', 'Le nom est obligatoire.');
       return;
@@ -124,7 +105,6 @@ export default function ProductEditScreen() {
 
     const stock = parseInt(stockStr, 10) || 0;
 
-    /* construction du payload */
     const payload: Partial<Product> = {
       name: sanitize(name),
       description: sanitize(description),
@@ -136,7 +116,6 @@ export default function ProductEditScreen() {
       isActive,
     };
 
-    /* si rien n'a changé, avertir et sortir */
     if (originalRef.current && shallowEqual(originalRef.current, payload)) {
       Alert.alert('Info', 'Aucune modification détectée.');
       return;
@@ -165,7 +144,6 @@ export default function ProductEditScreen() {
     }
   };
 
-  /* --------------------- UI --------------------------- */
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50 dark:bg-black">
@@ -176,14 +154,12 @@ export default function ProductEditScreen() {
 
   return (
     <>
-      
       {saving && <SavingOverlay />}
       <ScrollView
         className="flex-1 bg-gray-50 dark:bg-black p-4"
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Nom */}
         <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Nom</Text>
         <TextInput
           value={name}
@@ -191,10 +167,7 @@ export default function ProductEditScreen() {
           className="mb-4 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
         />
 
-        {/* Description */}
-        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          Description
-        </Text>
+        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Description</Text>
         <TextInput
           value={description}
           onChangeText={setDescription}
@@ -203,12 +176,9 @@ export default function ProductEditScreen() {
           className="mb-4 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
         />
 
-        {/* Prix & Stock */}
         <View className="flex-row gap-4 mb-4">
           <View className="flex-1">
-            <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Prix (€)
-            </Text>
+            <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Prix (€)</Text>
             <TextInput
               keyboardType="decimal-pad"
               value={priceStr}
@@ -217,9 +187,7 @@ export default function ProductEditScreen() {
             />
           </View>
           <View className="flex-1">
-            <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Stock
-            </Text>
+            <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Stock</Text>
             <TextInput
               keyboardType="number-pad"
               value={stockStr}
@@ -229,45 +197,32 @@ export default function ProductEditScreen() {
           </View>
         </View>
 
-        {/* Catégorie */}
-        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          Catégorie
-        </Text>
+        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Catégorie</Text>
         <TextInput
           value={category}
           onChangeText={setCategory}
           className="mb-4 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
         />
 
-        {/* Vendeur */}
-        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          Vendeur
-        </Text>
+        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Vendeur</Text>
         <TextInput
           value={vendor}
           onChangeText={setVendor}
           className="mb-4 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
         />
 
-        {/* Image URL */}
-        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          Image URL
-        </Text>
+        <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Image URL</Text>
         <TextInput
           value={imageUrl}
           onChangeText={setImageUrl}
           className="mb-4 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
         />
 
-        {/* Actif */}
         <View className="flex-row items-center justify-between mb-8">
-          <Text className="text-base text-gray-800 dark:text-gray-100">
-            Actif
-          </Text>
+          <Text className="text-base text-gray-800 dark:text-gray-100">Actif</Text>
           <Switch value={isActive} onValueChange={setIsActive} />
         </View>
 
-        {/* bouton SAVE */}
         <Pressable
           disabled={saving}
           onPress={handleSave}
@@ -284,9 +239,6 @@ export default function ProductEditScreen() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Styles                                                             */
-/* ------------------------------------------------------------------ */
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',

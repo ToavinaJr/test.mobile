@@ -96,7 +96,17 @@ export const updateUser = async (payload: { name: string; email: string }) => {
   const idx = users.findIndex((u) => u.id === details.id);
   if (idx === -1) throw new Error('Utilisateur non trouvé');
 
-  const updatedUser = { ...users[idx], ...payload };
+  // Vérifier si le nouvel email existe déjà pour un AUTRE utilisateur
+  const newEmail = payload.email.trim().toLowerCase();
+  const existingUserWithEmail = users.find(
+    (u) => u.email === newEmail && u.id !== details.id
+  );
+
+  if (existingUserWithEmail) {
+    throw new Error('Cet email est déjà utilisé par un autre compte.');
+  }
+
+  const updatedUser = { ...users[idx], ...payload, email: newEmail }; // Assurez-vous que l'email est en minuscules
   users[idx] = updatedUser;
 
   await storage.set(USERS_KEY, users);
@@ -110,4 +120,3 @@ export const updateUser = async (payload: { name: string; email: string }) => {
 
   return updatedUser;
 };
-

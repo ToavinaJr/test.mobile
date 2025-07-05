@@ -34,6 +34,17 @@ function CustomHeader({
 
   return (
     <BlurView tint={tint} intensity={90} style={headerStyle}>
+      {
+        router.canGoBack() &&
+        <Pressable
+          onPress={() => {
+            router.canGoBack() ? router.back() : null; 
+          }}
+          hitSlop={8}
+        >
+          <Ionicons name="arrow-back-outline" size={24} color={iconColor} />  
+        </Pressable>
+      }
       <Text
         style={{
           flex: 1,
@@ -77,8 +88,12 @@ export default function TabsLayout() {
                   ? 'Paramètres'
                   : route.name === 'profil/edit/index'
                   ? 'Éditer le profil'
+                  : route.name === 'products/edit/[productId]'
+                  ? 'Éditer le produit'
                   : route.name === 'products/add/index'
                   ? 'Ajout de produit'
+                  : route.name === 'products/[productId]'
+                  ? 'Détails du produit'
                   : 'Profil'
               }
               navigation={route}

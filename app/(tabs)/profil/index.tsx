@@ -1,46 +1,21 @@
-import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
   Pressable,
   ActivityIndicator,
-  StatusBar,
-  StyleSheet,
+  StatusBar
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect } from '@react-navigation/native';
-import { getUserDetails, signOut } from '@/services/auth.services';
+import { signOut } from '@/services/auth.services';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/auth-context';
+import { useProfile } from '@/hooks/useProfile';
 
 export default function ProfilScreen() {
   const router = useRouter();
   const { refresh } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<{
-    id: string;
-    name: string;
-    email: string;
-  } | null>(null);
-
-  useFocusEffect(
-    useCallback(() => {
-      let isActive = true;
-
-      (async () => {
-        const details = await getUserDetails();
-        if (isActive) {
-          setUser(details);
-          setLoading(false);
-        }
-      })();
-
-      return () => {
-        isActive = false;
-      };
-    }, [])
-  );
+  const { user, loading } = useProfile();
 
   if (loading)
     return (

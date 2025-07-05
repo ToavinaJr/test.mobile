@@ -1,3 +1,4 @@
+import { ProductCategory } from './ProductCategory';
 import { AuthUser } from "./AuthUser"
 import { User } from "./User"
 import { Product } from "./Product"
@@ -11,5 +12,6 @@ export {
     Product,
     SignInFormData,
     SignUpFormData,
-    AuthCredentials
+    AuthCredentials,
+    ProductCategory
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -26,11 +26,17 @@ export default function ProductAddScreen() {
     handleChange,
     pickImage,
     handleSubmit,
+    resetForm,
   } = useAddProduct();
+
+  useEffect(() => {
+    resetForm();
+  }, []);
 
   const handleSave = async () => {
     const result = await handleSubmit();
     if (result.success) {
+      resetForm();
       router.replace(`/(tabs)/?refresh=${Date.now()}` as RelativePathString);
     }
   };
@@ -77,7 +83,9 @@ export default function ProductAddScreen() {
             <Text className="text-sm text-gray-600 dark:text-gray-400 mt-3">
               Appuyez pour sélectionner une image
             </Text>
-            {errors.imageUrl && <Text className="text-red-500 text-sm mt-1">{errors.imageUrl}</Text>}
+            {errors.imageUrl && (
+              <Text className="text-red-500 text-sm mt-1">{errors.imageUrl}</Text>
+            )}
           </View>
 
           <Text className="text-sm text-gray-700 dark:text-gray-300 mb-1">Nom du produit</Text>
@@ -170,7 +178,9 @@ export default function ProductAddScreen() {
               );
             })}
           </ScrollView>
-          {errors.category && <Text className="text-red-500 text-sm mb-6">{errors.category}</Text>}
+          {errors.category && (
+            <Text className="text-red-500 text-sm mb-6">{errors.category}</Text>
+          )}
           {!errors.category && <View className="h-6" />}
 
           <View className="flex-row justify-between items-center bg-white dark:bg-zinc-800 rounded-xl px-4 py-3 mt-4 mb-8 shadow-sm">
