@@ -11,6 +11,5 @@ export const storage = {
   
   remove: (key: string) => AsyncStorage.removeItem(key),
 
-
   multiRemove: (keys: string[]) => AsyncStorage.multiRemove(keys),
 };

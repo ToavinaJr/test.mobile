@@ -8,7 +8,7 @@ import {
   SignUpFormInput,
   signUpFieldSchemas,
   signUpSchema,
-} from "@/schemas/sign-up.schema";
+} from "@/schemas/auth/auth-sign-up.schema";
 import { signUp } from "@/services/auth.services";
 
 /* ─────────── Helpers ─────────── */

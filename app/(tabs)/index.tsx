@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   ActivityIndicator,
@@ -8,17 +8,14 @@ import {
   Pressable,
   ScrollView,
   Keyboard,
-  Platform,
   StyleSheet
 } from 'react-native';
 import { useAuthGuard } from '@/hooks/useAuthGuard';
 import ProductCard from '@/components/products/ProductCard';
-import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
-import { getAllProducts, invalidateProductsCache } from '@/services/products.services';
-import { Product } from '@/types';
+import { router } from 'expo-router';
 import FloatingAddButton from '@/components/products/FloatingAddButton';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { useProducts } from '@/hooks/useProducts';
 
 const ProductsHeader = React.memo(
   ({
@@ -76,65 +73,18 @@ const ProductsHeader = React.memo(
 
 export default function HomeScreen() {
   const { loading: authLoading } = useAuthGuard();
-  const params = useLocalSearchParams();
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<string | null>(null);
 
-  const loadProducts = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await getAllProducts();
-      setProducts(data);
-    } catch (error) {
-      console.error('Erreur lors du chargement des produits:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const {
+    loading: productsLoading,
+    search,
+    selectedCategory,
+    categories,
+    filteredProducts,
+    handleSearchChange,
+    handleCategorySelect,
+  } = useProducts();
 
-
-  useFocusEffect(
-    useCallback(() => {
-      loadProducts();
-    }, [loadProducts])
-  );
-
-  
-  useEffect(() => {
-    if (params.refresh) {
-      
-      invalidateProductsCache();
-      loadProducts();
-    }
-  }, [params.refresh, loadProducts]);
-
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    products.forEach((p) => set.add(p.category ?? 'Autres'));
-    return ['Tous', ...Array.from(set)];
-  }, [products]);
-
-  const handleSelectCategory = useCallback(
-    (c: string) => {
-      setCategory(c === 'Tous' ? null : c);
-      Keyboard.dismiss();
-    },
-    []
-  );
-
-  const filtered = useMemo(
-    () =>
-      products.filter((p) => {
-        const matchCat = !category ? true : p.category === category;
-        const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
-        return matchCat && matchSearch;
-      }),
-    [category, search, products]
-  );
-
-  if (authLoading || loading) {
+  if (authLoading || productsLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-50 dark:bg-black">
         <ActivityIndicator size="large" color="#4f46e5" />
@@ -146,7 +96,7 @@ export default function HomeScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
     <View className="flex-1 bg-gray-50 dark:bg-black p-2">
       <FlatList
-        data={filtered}
+        data={filteredProducts}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ProductCard
@@ -166,10 +116,10 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <ProductsHeader
             search={search}
-            onChangeSearch={setSearch}
+            onChangeSearch={handleSearchChange}
             categories={categories}
-            selectedCategory={category}
-            onSelectCategory={handleSelectCategory}
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleCategorySelect}
           />
         }
         numColumns={2}
@@ -185,9 +135,7 @@ export default function HomeScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { padding: 16, flexGrow: 1 },
 });
-

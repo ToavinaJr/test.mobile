@@ -1,4 +1,4 @@
-// app/(tabs)/auth/sign-in
+// app/(tabs)/auth/sign-in.tsx
 import React, { useState } from "react";
 import {
   View,
@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import InputTextCard from "@/components/ui/InputTextCard";
 import ButtonCard from "@/components/ui/ButtonCard";
 import { signIn } from "@/services/auth.services";
-import { signInSchema } from "@/schemas/sign-in.schema";
+import { signInSchema } from "@/schemas/auth/auth-sign-in.schema";
 import { ZodError } from "zod";
 import { useAuth } from "@/context/auth-context";
 
@@ -26,7 +26,6 @@ export default function SignInScreen() {
   const [emailErr, setEmailErr] = useState<string | null | boolean>(false);
   const [passErr, setPassErr] = useState<string | null | boolean>(false);
   const [loading, setLoading] = useState(false);
-
   
   const validate = (field: "email" | "password", val: string) => {
     try {

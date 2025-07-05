@@ -5,7 +5,7 @@
     "description": "Un ordinateur portable puissant avec écran 15 pouces, idéal pour le développement et la création de contenu.",
     "price": 1899,
     "stock": 72,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "TechVision",
     "imageUrl": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
     "isActive": true
@@ -16,7 +16,7 @@
     "description": "Son immersif et réduction de bruit active pour une expérience d'écoute inégalée.",
     "price": 249,
     "stock": 150,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "SoundWave",
     "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
     "isActive": true
@@ -27,7 +27,7 @@
     "description": "Capturez chaque instant avec un triple capteur photo et profitez d'un écran AMOLED éclatant.",
     "price": 999,
     "stock": 210,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "ConnectX",
     "imageUrl": "https://images.unsplash.com/photo-1580910051074-3eb694886505",
     "isActive": true
@@ -38,7 +38,7 @@
     "description": "Appareil photo reflex numérique full-frame pour les photographes professionnels et amateurs exigeants.",
     "price": 1450,
     "stock": 35,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "FotoPro",
     "imageUrl": "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39",
     "isActive": true
@@ -49,7 +49,7 @@
     "description": "Drone quadricoptère avec caméra 4K, stabilisation sur 3 axes et autonomie de 30 minutes.",
     "price": 799,
     "stock": 50,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "SkyHigh Drones",
     "imageUrl": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108",
     "isActive": false
@@ -60,7 +60,7 @@
     "description": "Une délicieuse pizza garnie de pepperoni piquant et de mozzarella fondante sur une sauce tomate maison.",
     "price": 15,
     "stock": 100,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "La Pizzeria del Corso",
     "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591",
     "isActive": true
@@ -71,7 +71,7 @@
     "description": "Mélange frais de quinoa, avocat, tomates cerises, concombre et vinaigrette au citron.",
     "price": 12,
     "stock": 80,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Le Bol Vert",
     "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
     "isActive": true
@@ -82,7 +82,7 @@
     "description": "Pile de trois pancakes moelleux, servis avec sirop d'érable, myrtilles et framboises.",
     "price": 9,
     "stock": 120,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Breakfast Club",
     "imageUrl": "https://images.unsplash.com/photo-1528207776546-365bb710ee93",
     "isActive": true
@@ -93,7 +93,7 @@
     "description": "Double steak, double fromage cheddar, bacon croustillant, servi avec une portion de frites dorées.",
     "price": 18,
     "stock": 90,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Burger Palace",
     "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
     "isActive": true
@@ -104,7 +104,7 @@
     "description": "Un assortiment de fruits frais et bio, incluant ananas, raisins, oranges et kiwis.",
     "price": 25,
     "stock": 40,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Le Verger Local",
     "imageUrl": "https://images.unsplash.com/photo-1571575294212-0b134c035a4a",
     "isActive": true
@@ -115,7 +115,7 @@
     "description": "Montre connectée avec suivi GPS, capteur de fréquence cardiaque et plus de 20 modes sportifs.",
     "price": 199,
     "stock": 180,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "FitTech",
     "imageUrl": "https://images.unsplash.com/photo-1544117519-31a4b719223d",
     "isActive": true
@@ -126,7 +126,7 @@
     "description": "Chaussures de sport au design dynamique, parfaites pour la course en ville et un style décontracté.",
     "price": 120,
     "stock": 250,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "Street Kicks",
     "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
     "isActive": true
@@ -137,7 +137,7 @@
     "description": "Montre à quartz avec bracelet en cuir véritable et boîtier en acier inoxydable. Un classique intemporel.",
     "price": 350,
     "stock": 60,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "Horlogerie Suisse",
     "imageUrl": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
     "isActive": true
@@ -148,7 +148,7 @@
     "description": "Monture métallique fine et verres polarisés pour une protection UV optimale et un style iconique.",
     "price": 160,
     "stock": 110,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "SunShades Co.",
     "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083",
     "isActive": true
@@ -159,7 +159,7 @@
     "description": "Bonnet chaud et confortable en maille côtelée, fabriqué à partir de laine mérinos douce.",
     "price": 35,
     "stock": 300,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "Nordic Weavers",
     "imageUrl": "https://images.unsplash.com/photo-1576037841932-d8a2b91f3a53",
     "isActive": true
@@ -170,7 +170,7 @@
     "description": "Canapé 3 places en tissu gris clair, pieds en bois massif. Parfait pour un salon moderne et épuré.",
     "price": 1299,
     "stock": 25,
-    "category": "Decors",
+    "category": "Mobilier",
     "vendor": "Maison & Style",
     "imageUrl": "https://images.unsplash.com/photo-1618220179428-22790b461013",
     "isActive": false
@@ -181,7 +181,7 @@
     "description": "Grande plante Monstera Deliciosa dans un pot en céramique blanche, idéale pour purifier l'air.",
     "price": 75,
     "stock": 55,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "La Jungle Urbaine",
     "imageUrl": "https://images.unsplash.com/photo-1592150621744-aca64f48394a",
     "isActive": true
@@ -192,7 +192,7 @@
     "description": "Lampe d'appoint au design industriel avec ampoule à filament de style Edison. Base en bois.",
     "price": 89,
     "stock": 95,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Lumière & Co",
     "imageUrl": "https://images.unsplash.com/photo-1543198126-a8ad8e47fb22",
     "isActive": true
@@ -203,7 +203,7 @@
     "description": "Ensemble de trois coussins décoratifs en velours (vert, rose, moutarde) pour une touche de couleur et de confort.",
     "price": 59,
     "stock": 130,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Home Comforts",
     "imageUrl": "https://images.unsplash.com/photo-1617325247885-745d58a5c324",
     "isActive": true
@@ -214,7 +214,7 @@
     "description": "Vase transparent au design minimaliste, garni de tiges d'herbe de la pampa séchée.",
     "price": 45,
     "stock": 85,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Boho Décor",
     "imageUrl": "https://images.unsplash.com/photo-1586944136194-a46f2a24e4d5",
     "isActive": true
@@ -225,7 +225,7 @@
     "description": "Casque VR immersif avec suivi de mouvement et écran haute résolution.",
     "price": 399,
     "stock": 45,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "VirtualTech",
     "imageUrl": "https://images.unsplash.com/photo-1566282535244-240f1a031d9f",
     "isActive": true
@@ -236,7 +236,7 @@
     "description": "Aspirateur robot avec navigation intelligente et contrôle via application mobile.",
     "price": 279,
     "stock": 60,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "SmartHome Solutions",
     "imageUrl": "https://images.unsplash.com/photo-1517336714779-4616f85dd4c1",
     "isActive": true
@@ -247,7 +247,7 @@
     "description": "Enceinte Bluetooth résistante à l'eau avec une qualité sonore exceptionnelle.",
     "price": 129,
     "stock": 90,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "AudioX",
     "imageUrl": "https://images.unsplash.com/photo-1505685208987-a56fcae8a2e6",
     "isActive": true
@@ -258,7 +258,7 @@
     "description": "Console de jeu de nouvelle génération avec graphismes 4K et une vaste bibliothèque de jeux.",
     "price": 499,
     "stock": 30,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "GameSphere",
     "imageUrl": "https://images.unsplash.com/photo-1587444714451-e846b51443b2",
     "isActive": true
@@ -269,7 +269,7 @@
     "description": "Machine à expresso avec broyeur intégré pour un café de qualité barista à domicile.",
     "price": 299,
     "stock": 75,
-    "category": "Appliances",
+    "category": "Appareils ménagers",
     "vendor": "KitchenCraft",
     "imageUrl": "https://images.unsplash.com/photo-1517058279623-c703a10b928f",
     "isActive": true
@@ -280,7 +280,7 @@
     "description": "Mixeur plongeant avec plusieurs accessoires pour toutes vos préparations culinaires.",
     "price": 89,
     "stock": 110,
-    "category": "Appliances",
+    "category": "Appareils ménagers",
     "vendor": "Chef's Choice",
     "imageUrl": "https://images.unsplash.com/photo-1578985545062-6992798f5a66",
     "isActive": true
@@ -291,7 +291,7 @@
     "description": "Four à micro-ondes avec fonction de cuisson intelligente et pré-réglages.",
     "price": 149,
     "stock": 40,
-    "category": "Appliances",
+    "category": "Appareils ménagers",
     "vendor": "HomeTech",
     "imageUrl": "https://images.unsplash.com/photo-1585867223148-87b6b38f8b48",
     "isActive": true
@@ -302,7 +302,7 @@
     "description": "Lave-vaisselle silencieux et économe en énergie, idéal pour les cuisines modernes.",
     "price": 699,
     "stock": 20,
-    "category": "Appliances",
+    "category": "Appareils ménagers",
     "vendor": "Appliance World",
     "imageUrl": "https://images.unsplash.com/photo-1547516980-2e50e769a266",
     "isActive": false
@@ -313,7 +313,7 @@
     "description": "Sèche-linge avec plusieurs programmes et technologie de séchage par condensation.",
     "price": 549,
     "stock": 30,
-    "category": "Appliances",
+    "category": "Appareils ménagers",
     "vendor": "Appliance World",
     "imageUrl": "https://images.unsplash.com/photo-1571062553428-83494d653ee6",
     "isActive": true
@@ -324,7 +324,7 @@
     "description": "T-shirt en coton doux et respirant, coupe classique.",
     "price": 25,
     "stock": 400,
-    "category": "Clothing",
+    "category": "Vêtements",
     "vendor": "Urban Threads",
     "imageUrl": "https://images.unsplash.com/photo-1598100437650-9b637966c2a9",
     "isActive": true
@@ -335,7 +335,7 @@
     "description": "Jean slim en denim de qualité supérieure avec finition selvedge.",
     "price": 89,
     "stock": 150,
-    "category": "Clothing",
+    "category": "Vêtements",
     "vendor": "Denim Co.",
     "imageUrl": "https://images.unsplash.com/photo-1503634964111-796091602272",
     "isActive": true
@@ -346,7 +346,7 @@
     "description": "Veste en cuir véritable avec un design inspiré des courses automobiles.",
     "price": 299,
     "stock": 50,
-    "category": "Clothing",
+    "category": "Vêtements",
     "vendor": "Leather & Co.",
     "imageUrl": "https://images.unsplash.com/photo-1551754040-92a8a7450d2c",
     "isActive": true
@@ -357,7 +357,7 @@
     "description": "Robe longue fluide avec imprimé floral, parfaite pour l'été.",
     "price": 79,
     "stock": 90,
-    "category": "Clothing",
+    "category": "Vêtements",
     "vendor": "Boho Chic",
     "imageUrl": "https://images.unsplash.com/photo-1505397694088-832779562322",
     "isActive": true
@@ -368,7 +368,7 @@
     "description": "Sweat à capuche confortable en molleton, idéal pour le quotidien.",
     "price": 45,
     "stock": 200,
-    "category": "Clothing",
+    "category": "Vêtements",
     "vendor": "Urban Threads",
     "imageUrl": "https://images.unsplash.com/photo-1604679508486-45c43b92b3c5",
     "isActive": true
@@ -379,7 +379,7 @@
     "description": "Table basse en bois avec pieds en métal, design inspiré du milieu du siècle.",
     "price": 179,
     "stock": 40,
-    "category": "Decors",
+    "category": "Mobilier",
     "vendor": "Retro Furnishings",
     "imageUrl": "https://images.unsplash.com/photo-1503602642451-8a0c13754d96",
     "isActive": true
@@ -390,7 +390,7 @@
     "description": "Miroir mural décoratif avec un cadre en forme de soleil.",
     "price": 59,
     "stock": 120,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Home Comforts",
     "imageUrl": "https://images.unsplash.com/photo-1543536253-0393e3a50787",
     "isActive": true
@@ -401,7 +401,7 @@
     "description": "Tapis berbère en laine tissée à la main, pour un intérieur chaleureux.",
     "price": 199,
     "stock": 30,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Boho Décor",
     "imageUrl": "https://images.unsplash.com/photo-1549716883-6869b8b78862",
     "isActive": true
@@ -412,7 +412,7 @@
     "description": "Set de trois bougies parfumées avec des senteurs relaxantes.",
     "price": 35,
     "stock": 180,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Home Fragrance",
     "imageUrl": "https://images.unsplash.com/photo-1566049390314-2a927c572b67",
     "isActive": true
@@ -423,7 +423,7 @@
     "description": "Lampe de chevet au design épuré, avec abat-jour en lin.",
     "price": 69,
     "stock": 70,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Lumière & Co",
     "imageUrl": "https://images.unsplash.com/photo-1566795692425-4e63827934c5",
     "isActive": true
@@ -434,7 +434,7 @@
     "description": "Bouteilles d'eau isothermes en acier inoxydable, garde les boissons froides pendant des heures.",
     "price": 29,
     "stock": 250,
-    "category": "Lifestyle",
+    "category": "Autres",
     "vendor": "Hydration Station",
     "imageUrl": "https://images.unsplash.com/photo-1570819011487-43e529776242",
     "isActive": true
@@ -445,7 +445,7 @@
     "description": "Sac à dos de randonnée spacieux et résistant, idéal pour les aventures en plein air.",
     "price": 79,
     "stock": 80,
-    "category": "Lifestyle",
+    "category": "Sports",
     "vendor": "Outdoor Gear",
     "imageUrl": "https://images.unsplash.com/photo-1600571524308-440b31cb139a",
     "isActive": true
@@ -456,7 +456,7 @@
     "description": "Assortiment de plantes succulentes en pot, parfait pour décorer votre intérieur.",
     "price": 15,
     "stock": 100,
-    "category": "Lifestyle",
+    "category": "Autres",
     "vendor": "Urban Oasis",
     "imageUrl": "https://images.unsplash.com/photo-1615166606409-30c2124437cf",
     "isActive": true
@@ -467,7 +467,7 @@
     "description": "Jeu de société amusant pour toute la famille, idéal pour les soirées jeux.",
     "price": 39,
     "stock": 60,
-    "category": "Lifestyle",
+    "category": "Jouets",
     "vendor": "Game Night",
     "imageUrl": "https://images.unsplash.com/photo-1622232683045-831f23e19176",
     "isActive": true
@@ -478,7 +478,7 @@
     "description": "Casque audio sans fil avec réduction de bruit, pour une expérience d'écoute immersive.",
     "price": 149,
     "stock": 120,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "AudioTech",
     "imageUrl": "https://images.unsplash.com/photo-1601687707841-33f73e56b987",
     "isActive": true
@@ -489,7 +489,7 @@
     "description": "Café en grains de Colombie, saveur riche et aromatique.",
     "price": 14,
     "stock": 150,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Coffee Corner",
     "imageUrl": "https://images.unsplash.com/photo-1500231344917-e8a98553b866",
     "isActive": true
@@ -500,7 +500,7 @@
     "description": "Tablette tactile avec écran haute résolution et performances rapides.",
     "price": 299,
     "stock": 90,
-    "category": "Electronics",
+    "category": "Électronique",
     "vendor": "Tablet Zone",
     "imageUrl": "https://images.unsplash.com/photo-1529502599747-8a06e4496022",
     "isActive": true
@@ -511,29 +511,29 @@
     "description": "Sandales en cuir véritable, confortables et élégantes.",
     "price": 69,
     "stock": 110,
-    "category": "Wearables",
+    "category": "Vêtements",
     "vendor": "Footwear Boutique",
     "imageUrl": "https://images.unsplash.com/photo-1548242522-53624b5b429a",
     "isActive": true
   },
-    {
+  {
     "id": "48",
     "name": "Ensemble de literie en coton",
     "description": "Ensemble de literie en coton égyptien, doux et respirant.",
     "price": 99,
     "stock": 75,
-    "category": "Decors",
+    "category": "Autres",
     "vendor": "Home Comforts",
     "imageUrl": "https://images.unsplash.com/photo-1606263947363-3cd887d52a50",
     "isActive": true
   },
-    {
+  {
     "id": "49",
     "name": "Série de livres 'Science-fiction'",
     "description": "Série de livres de science-fiction captivante et immersive.",
     "price": 50,
     "stock": 100,
-    "category": "Lifestyle",
+    "category": "Livres",
     "vendor": "Book Paradise",
     "imageUrl": "https://images.unsplash.com/photo-1534792859750-413602a48f25",
     "isActive": true
@@ -544,7 +544,7 @@
     "description": "Planche à découper en bois de haute qualité, idéale pour la préparation des aliments.",
     "price": 35,
     "stock": 80,
-    "category": "Foods",
+    "category": "Alimentation",
     "vendor": "Kitchen Essentials",
     "imageUrl": "https://images.unsplash.com/photo-1618591965593-4d8ca90c9b37",
     "isActive": true

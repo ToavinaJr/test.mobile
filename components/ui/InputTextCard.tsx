@@ -14,6 +14,8 @@ type InputTextCardProps = {
     messageStatus?: string | null | undefined | boolean;
     isValid?: boolean;
     type?: 'text' | 'email' | 'password';
+    keyboardType?: 'default' | 'email-address' | 'numeric' | 'decimal-pad' | 'number-pad';
+    onBlur?: () => void; // Ajout de la prop onBlur
 }
 
 const InputTextCard = ({
@@ -25,7 +27,10 @@ const InputTextCard = ({
     messageStatus,
     onPressSecure,
     isPassword,
-    isValid = true
+    isValid = true,
+    type = 'text',
+    keyboardType = 'default',
+    onBlur, // Récupération de la prop onBlur
 }: InputTextCardProps) => {
   const [secure, setSecure] = React.useState(secureTextEntry);
 
@@ -51,8 +56,9 @@ const InputTextCard = ({
         onChangeText={onChangeText}
         secureTextEntry={secure}
         className={`border ${borderColor} p-4 rounded-lg bg-white text-black`}
-        keyboardType={title === 'Email' ? 'email-address' : 'default'}
+        keyboardType={keyboardType}
         autoCapitalize="none"
+        onBlur={onBlur}
       />
 
       {!isValid && messageStatus && (

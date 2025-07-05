@@ -24,6 +24,7 @@ import {
 } from '@/services/products.services';
 import { Product } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
+import { ProductCategory } from '@/types/ProductCategory';
 
 /* ------------------------------------------------------------------ */
 /* Overlay visuel pendant la sauvegarde                               */
@@ -129,7 +130,7 @@ export default function ProductEditScreen() {
       description: sanitize(description),
       price,
       stock,
-      category: sanitize(category),
+      category: category as ProductCategory,
       vendor: sanitize(vendor),
       imageUrl: sanitize(imageUrl),
       isActive,

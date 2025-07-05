@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -9,23 +9,14 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { getProductById } from '@/services/products.services';
+import { useProductDetail } from '@/hooks/useProductDetail';
 
 export default function ProductDetail() {
-  const router            = useRouter();
-  const { productId }     = useLocalSearchParams();
-  const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { productId } = useLocalSearchParams();
 
-  useEffect(() => {
-    (async () => {
-      const p = await getProductById(productId as string);
-      setProduct(p);
-      setLoading(false);
-    })();
-  }, [productId]);
+  const { product, loading } = useProductDetail(productId);
 
-  /* -------------------- loading -------------------- */
   if (loading)
     return (
       <View className="flex-1 items-center justify-center bg-gray-50 dark:bg-black">
@@ -33,7 +24,6 @@ export default function ProductDetail() {
       </View>
     );
 
-  /* -------------------- not found ------------------ */
   if (!product)
     return (
       <View className="flex-1 items-center justify-center p-6 bg-gray-50 dark:bg-black">
@@ -69,7 +59,6 @@ export default function ProductDetail() {
       className="flex-1 bg-gray-50 dark:bg-black"
       showsVerticalScrollIndicator={false}
     >
-      {/* -------- image & back -------- */}
       <View className="relative">
         <Image source={{ uri: imageUrl }} className="w-full aspect-[4/3]" />
         {!isActive && (
@@ -78,14 +67,13 @@ export default function ProductDetail() {
           </View>
         )}
         <Pressable
-          onPress={() => router.canGoBack()}
+          onPress={() => router.back()}
           className="absolute top-4 left-4 p-2 rounded-full bg-black/60"
         >
           <Ionicons name="arrow-back" size={20} color="#fff" />
         </Pressable>
       </View>
 
-      {/* -------- body -------- */}
       <View className="p-4">
         <Text className="self-start mb-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">
           {category}
@@ -101,7 +89,7 @@ export default function ProductDetail() {
         </View>
 
         <Text className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Vendu par <Text className="font-semibold">{vendor}</Text>
+          Vendu par <Text className="font-semibold bg-green-100 dark:bg-green-700 rounded-md px-3 py-1 text-green-800 dark:text-green-100">{vendor}</Text>
         </Text>
 
         <Text
@@ -116,14 +104,13 @@ export default function ProductDetail() {
           {description}
         </Text>
 
-        {/* -------- actions -------- */}
         <View className='flex-row justify-center gap-4 mt-6'>
           <Pressable
             onPress={() => {
               router.push(`/products/delete/${productId}`);
               }
             }            
-            className={`mt-6 w-[40%] py-2 px-4 rounded-xl justify-center items-center flex-row`}
+            className={`mt-6 w-[40%] py-2 px-4 rounded-xl justify-center items-center flex-row bg-red-600`}
           >
             <Ionicons name="trash-outline" size={20} color="#fff" />
             <Text className="text-white font-medium ml-1">Supprimer</Text>
@@ -134,7 +121,7 @@ export default function ProductDetail() {
               router.push(`/products/edit/${productId}`);
               }
             }
-            className={`mt-6 py-2 px-4 w-[40%] rounded-xl justify-center items-center flex-row `}
+            className={`mt-6 py-2 px-4 w-[40%] rounded-xl justify-center items-center flex-row bg-indigo-600`}
           >
             <Ionicons name="pencil-outline" size={20} color="#fff" />
             <Text className="text-white font-medium ml-1">Modifier</Text>

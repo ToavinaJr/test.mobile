@@ -5,6 +5,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/context/auth-context';
 import { useColorScheme } from '@/components/useColorScheme';
 import './global.css'
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,13 +22,15 @@ export default function RootLayout() {
   SplashScreen.hideAsync();
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="auth" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+          </Stack>
+        </ThemeProvider>
+      </AuthProvider>
+    </Provider>
   );
 }

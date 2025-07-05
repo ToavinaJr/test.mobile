@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getUserDetails, updateUser } from '@/services/auth.services';
 import { useRouter } from 'expo-router';
 import { ZodError } from 'zod';
-import { editProfileSchema, EditProfileFormInput } from '@/schemas/profil-edit.schema';
+import { editProfileSchema, EditProfileFormInput } from '@/schemas/profil/profil-edit.schema'
 import InputTextCard from '@/components/ui/InputTextCard';
 
 export default function EditProfilScreen() {
@@ -102,7 +102,6 @@ export default function EditProfilScreen() {
           </Text>
           <InputTextCard
             title="Nom"
-            type="text"
             placeholder="Entrez votre nom"
             value={form.name}
             onChangeText={(v) => {
@@ -128,7 +127,7 @@ export default function EditProfilScreen() {
             }}
             isValid={emailErr === null}
             messageStatus={emailErr}
-            type="email"
+            keyboardType='email-address'
           />
         </View>
       </View>
