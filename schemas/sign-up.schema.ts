@@ -4,7 +4,8 @@ export const signUpFieldSchemas = {
   name: z
     .string()
     .min(3, "Le nom doit contenir au moins 3 caractères.")
-    .nonempty("Le nom est requis."),
+    .nonempty("Le nom est requis.")
+    .regex(/^[a-zA-Z0-9\s]+$/, "Le nom ne doit pas contenir de caractères spéciaux."),
   email: z
     .string()
     .email("Veuillez entrer une adresse email valide.")

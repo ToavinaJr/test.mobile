@@ -13,6 +13,7 @@ type InputTextCardProps = {
     isPassword?: boolean;
     messageStatus?: string | null | undefined | boolean;
     isValid?: boolean;
+    type?: 'text' | 'email' | 'password';
 }
 
 const InputTextCard = ({
