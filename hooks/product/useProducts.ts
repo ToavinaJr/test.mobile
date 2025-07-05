@@ -2,11 +2,10 @@ import { useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/store';
 import { fetchProducts, setSearch, setSelectedCategory, setCurrentPage } from '@/store/product-slice';
-import { Product } from '@/types';
 import { useLocalSearchParams } from 'expo-router';
 
 export const useProducts = () => {
-  const { products, loading, error, search, selectedCategory, currentPage, itemsPerPage, totalProducts } = useSelector(
+  const { products, loading, error, search, selectedCategory, currentPage, itemsPerPage } = useSelector(
     (state: RootState) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -71,17 +70,17 @@ export const useProducts = () => {
   );
 
   return {
-    products: paginatedProducts, // Retourne les produits paginés
+    products: paginatedProducts,
     loading,
     error,
     search,
     selectedCategory,
     categories,
-    filteredProducts: filteredAndSearchedProducts, // Retourne tous les produits filtrés (utile pour le total)
+    filteredProducts: filteredAndSearchedProducts,
     currentPage,
     itemsPerPage,
     totalPages,
-    totalFilteredProducts: filteredAndSearchedProducts.length, // Total des produits après filtrage
+    totalFilteredProducts: filteredAndSearchedProducts.length,
     handleSearchChange,
     handleCategorySelect,
     handlePageChange,

@@ -12,9 +12,9 @@ import {
   StyleSheet
 } from 'react-native';
 import { useAuthGuard } from '@/hooks/auth/useAuthGuard';
-import ProductCard from '@/components/products/ProductCard';
+import ProductCard from '@/components/ProductCard';
 import { router } from 'expo-router';
-import FloatingAddButton from '@/components/products/FloatingButton';
+import FloatingAddButton from '@/components/ui/FloatingButton';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useProducts } from '@/hooks/product/useProducts';
 import { Ionicons } from '@expo/vector-icons';

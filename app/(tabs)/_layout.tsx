@@ -1,5 +1,5 @@
 import { Redirect, router, Tabs } from 'expo-router';
-import { useAuth } from '@/context/auth-context'; // This context will now read from Redux
+import { useAuth } from '@/context/auth-context';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -86,7 +86,7 @@ export default function TabsLayout() {
                   ? 'Accueil'
                   : route.name === 'settings'
                   ? 'Paramètres'
-                  : route.name === 'profil/index' // Corrected for profil/index
+                  : route.name === 'profil/index'
                   ? 'Profil'
                   : route.name === 'profil/edit/index'
                   ? 'Éditer le profil'
@@ -96,7 +96,7 @@ export default function TabsLayout() {
                   ? 'Ajout de produit'
                   : route.name === 'products/[productId]'
                   ? 'Détails du produit'
-                  : 'Chargement...' // Default for unexpected route.name
+                  : 'Chargement...'
               }
               navigation={route}
             />
@@ -143,7 +143,7 @@ export default function TabsLayout() {
         />
         <Tabs.Screen
           name="products/[productId]"
-          options={{ href: null, title: "Détails du produit" }} // Changed title
+          options={{ href: null, title: "Détails du produit" }}
         />
         <Tabs.Screen
           name="products/edit/[productId]"
@@ -151,7 +151,7 @@ export default function TabsLayout() {
         />
         <Tabs.Screen
           name="products/delete/[productId]"
-          options={{ href: null, title: 'Suppression produit' }} // Changed title
+          options={{ href: null, title: 'Suppression produit' }}
         />
         <Tabs.Screen
           name="products/add/index"

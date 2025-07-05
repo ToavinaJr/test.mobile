@@ -84,7 +84,7 @@ const SignUpScreen: React.FC = () => {
               messageStatus={errors.confirmPassword}
               onPressSecure={toggleShowConfirmPassword}
             />
-            <View className="h-8" />
+            <View className="h-4" />
 
             <ButtonCard
               title={isSigningUp ? "Création..." : "S'inscrire"}
@@ -93,8 +93,17 @@ const SignUpScreen: React.FC = () => {
               containerStyle="w-full py-3"
               textStyle="text-xl"
             />
-
-            <View className="mt-8 flex-row justify-center items-center">
+            
+            <TouchableOpacity
+              className="mt-6"
+              onPress={() => router.push("/auth/forgot-password")}
+            >
+              <Text className="text-blue-600 text-center font-semibold">
+                Mot de passe oublié ?
+              </Text>
+            </TouchableOpacity>
+            
+            <View className="mt-4 flex-row justify-center items-center">
               <Text className="text-gray-600 text-base">Déjà inscrit ? </Text>
               <TouchableOpacity onPress={() => router.push("/auth/sign-in")}>
                 <Text className="text-blue-600 text-base font-semibold">

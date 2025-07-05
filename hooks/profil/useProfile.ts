@@ -8,10 +8,6 @@ interface UserProfile {
   email: string;
 }
 
-/**
- * Hook personnalisé pour charger et gérer les détails du profil utilisateur.
- * Utilise useFocusEffect pour recharger les données lorsque l'écran est mis au point.
- */
 export const useProfile = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -29,12 +25,9 @@ export const useProfile = () => {
     }
   }, []);
 
-  // Recharge le profil chaque fois que l'écran est mis au point
   useFocusEffect(
     useCallback(() => {
       loadProfile();
-      // Pas besoin de fonction de nettoyage spécifique pour isActive ici
-      // car loadProfile est déjà useCallback et ne dépend pas de l'état local isActive
     }, [loadProfile])
   );
 

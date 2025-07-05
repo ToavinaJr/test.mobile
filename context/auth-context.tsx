@@ -1,4 +1,3 @@
-// context/auth-context.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getUserToken, getUserDetails, signOut as signOutService } from '@/services/auth.services';
 import { useDispatch, useSelector } from 'react-redux';

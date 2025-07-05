@@ -72,7 +72,7 @@ export default function EditProfilScreen() {
       await updateUser(form);
       Alert.alert('Succès', 'Profil mis à jour.');
       router.replace('/profil');
-    } catch (e: any) { // Explicitly type 'e' as 'any' or 'Error'
+    } catch (e: any) {
       Alert.alert('Erreur', e.message || 'Impossible de sauvegarder le profil. Veuillez réessayer.');
     } finally {
       setSaving(false);
