@@ -1,93 +1,51 @@
+// store/auth-slice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signIn as authSignInService, signOut as authSignOutService, getUserToken, getUserDetails, updateUser as authUpdateUserService } from '@/services/auth.services';
-import { SignInFormData, User } from '@/types';
+import { SignInFormData, AuthUser } from '@/types';
+import { signIn as signInService, signOut as signOutService } from '@/services/auth.services';
 
-// Définition de l'état de l'authentification
 interface AuthState {
-  user: { id: string; name: string; email: string } | null;
   token: string | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-  error: string | null;
-  isSigningIn: boolean; // État spécifique pour le processus de connexion
-  signInError: string | null; // Erreur spécifique à la connexion
-  isSigningUp: boolean;
-  signUpError: string | null;
-  isUpdatingProfile: boolean;
-  updateProfileError: string | null;
+  user: AuthUser | null;
+  isSigningIn: boolean;
+  signInError: string | null;
+  isSigningOut: boolean;
+  signOutError: string | null;
 }
 
-// État initial
 const initialState: AuthState = {
-  user: null,
   token: null,
-  isAuthenticated: false,
-  loading: true, // Initialement à true pour le chargement initial du token
-  error: null,
+  user: null,
   isSigningIn: false,
   signInError: null,
-  isSigningUp: false,
-  signUpError: null,
-  isUpdatingProfile: false,
-  updateProfileError: null,
+  isSigningOut: false,
+  signOutError: null,
 };
 
-// Thunk pour la connexion
 export const signInUser = createAsyncThunk(
-  'auth/signInUser',
-  async (credentials: SignInFormData, { rejectWithValue }) => {
+  'auth/signIn',
+  async ({ email, password }: SignInFormData, { rejectWithValue }) => {
     try {
-      const response = await authSignInService(credentials);
+      const response = await signInService({ email, password });
+
       if (response.success && response.token && response.user) {
         return { token: response.token, user: response.user };
       } else {
-        return rejectWithValue(response.message || 'Échec de la connexion');
+        return rejectWithValue(response.message || 'Email ou mot de passe invalide.');
       }
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Une erreur inattendue est survenue lors de la connexion');
+      return rejectWithValue(error.message || 'Une erreur inattendue est survenue.');
     }
   }
 );
 
-// Thunk pour la déconnexion
 export const signOutUser = createAsyncThunk(
-  'auth/signOutUser',
+  'auth/signOut',
   async (_, { rejectWithValue }) => {
     try {
-      await authSignOutService();
+      await signOutService();
       return true;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Échec de la déconnexion');
-    }
-  }
-);
-
-// Thunk pour charger l'utilisateur depuis le stockage au démarrage de l'application
-export const loadUserFromStorage = createAsyncThunk(
-  'auth/loadUserFromStorage',
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = await getUserToken();
-      const userDetails = await getUserDetails();
-      if (token && userDetails) {
-        return { token, user: userDetails };
-      }
-      return null;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Échec du chargement de l\'utilisateur depuis le stockage');
-    }
-  }
-);
-
-// Thunk pour la mise à jour du profil utilisateur
-export const updateProfile = createAsyncThunk(
-  'auth/updateProfile',
-  async (payload: { name: string; email: string }, { rejectWithValue }) => {
-    try {
-      const updatedUser = await authUpdateUserService(payload);
-      return updatedUser;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Échec de la mise à jour du profil');
+      return rejectWithValue(error.message || 'Erreur lors de la déconnexion.');
     }
   }
 );
@@ -97,89 +55,55 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearAuthError: (state) => {
-      state.error = null;
       state.signInError = null;
-      state.signUpError = null;
-      state.updateProfileError = null;
+      state.signOutError = null;
     },
-    // Si vous avez un thunk pour l'inscription, vous pouvez ajouter des reducers ici
-    // Par exemple, pour gérer l'état de l'inscription
+    setAuthToken: (state, action: PayloadAction<string | null>) => {
+      state.token = action.payload;
+    },
+    setAuthUser: (state, action: PayloadAction<AuthUser | null>) => {
+      state.user = action.payload;
+    },
+    setInitialAuth: (state, action: PayloadAction<{ token: string | null; user: AuthUser | null }>) => {
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
   },
   extraReducers: (builder) => {
     builder
-      // signInUser
       .addCase(signInUser.pending, (state) => {
         state.isSigningIn = true;
         state.signInError = null;
       })
-      .addCase(signInUser.fulfilled, (state, action: PayloadAction<{ token: string; user: { id: string; name: string; email: string } }>) => {
+      .addCase(signInUser.fulfilled, (state, action) => {
         state.isSigningIn = false;
-        state.isAuthenticated = true;
         state.token = action.payload.token;
         state.user = action.payload.user;
         state.signInError = null;
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.isSigningIn = false;
-        state.isAuthenticated = false;
         state.token = null;
         state.user = null;
         state.signInError = action.payload as string;
       })
-      // signOutUser
+      .addCase(signOutUser.pending, (state) => {
+        state.isSigningOut = true;
+        state.signOutError = null;
+      })
       .addCase(signOutUser.fulfilled, (state) => {
-        state.isAuthenticated = false;
+        state.isSigningOut = false;
         state.token = null;
         state.user = null;
-        state.error = null;
-        state.signInError = null;
-        state.signUpError = null;
-        state.updateProfileError = null;
+        state.signOutError = null;
       })
       .addCase(signOutUser.rejected, (state, action) => {
-        state.error = action.payload as string;
-      })
-      // loadUserFromStorage
-      .addCase(loadUserFromStorage.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(loadUserFromStorage.fulfilled, (state, action: PayloadAction<{ token: string; user: { id: string; name: string; email: string } } | null>) => {
-        state.loading = false;
-        if (action.payload) {
-          state.isAuthenticated = true;
-          state.token = action.payload.token;
-          state.user = action.payload.user;
-        } else {
-          state.isAuthenticated = false;
-          state.token = null;
-          state.user = null;
-        }
-      })
-      .addCase(loadUserFromStorage.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.token = null;
-        state.user = null;
-        state.error = action.payload as string;
-      })
-      // updateProfile
-      .addCase(updateProfile.pending, (state) => {
-        state.isUpdatingProfile = true;
-        state.updateProfileError = null;
-      })
-      .addCase(updateProfile.fulfilled, (state, action: PayloadAction<User>) => {
-        state.isUpdatingProfile = false;
-        if (state.user) {
-          state.user.name = action.payload.name;
-          state.user.email = action.payload.email;
-        }
-      })
-      .addCase(updateProfile.rejected, (state, action) => {
-        state.isUpdatingProfile = false;
-        state.updateProfileError = action.payload as string;
+        state.isSigningOut = false;
+        state.signOutError = action.payload as string;
       });
   },
 });
 
-export const { clearAuthError } = authSlice.actions;
+export const { clearAuthError, setAuthToken, setAuthUser, setInitialAuth } = authSlice.actions;
+
 export default authSlice.reducer;

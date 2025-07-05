@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+// hooks/auth/useSignIn.tsx
+import { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ZodError } from 'zod';
 import { signInSchema } from '@/schemas/auth/auth-sign-in.schema';
@@ -8,7 +9,7 @@ import { Keyboard } from 'react-native';
 
 export const useSignIn = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isSigningIn, signInError } = useSelector((state: RootState) => state.auth);
+  const { isSigningIn, signInError, token } = useSelector((state: RootState) => state.auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +17,14 @@ export const useSignIn = () => {
 
   const [emailErr, setEmailErr] = useState<string | null>(null);
   const [passErr, setPassErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (signInError) {
+      dispatch(clearAuthError());
+    }
+    setEmailErr(null);
+    setPassErr(null);
+  }, []);
 
   const validateField = useCallback((field: 'email' | 'password', value: string) => {
     try {
@@ -55,6 +64,7 @@ export const useSignIn = () => {
 
     try {
       signInSchema.parse({ email, password });
+
       const resultAction = await dispatch(signInUser({ email, password }));
 
       if (signInUser.rejected.match(resultAction)) {
@@ -81,6 +91,7 @@ export const useSignIn = () => {
     passErr,
     isSigningIn,
     signInError,
+    token,
     handleChangeEmail,
     handleChangePassword,
     toggleShowPassword,
