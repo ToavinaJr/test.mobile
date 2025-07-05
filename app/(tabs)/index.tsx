@@ -1,5 +1,5 @@
 // app/(tabs)/index.tsx
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   View,
   ActivityIndicator,

@@ -1,162 +1,3 @@
-// // app/auth/sign-in.tsx
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   Alert,
-//   TouchableOpacity,
-//   ActivityIndicator,
-// } from "react-native";
-// import { Stack, router } from "expo-router";
-// import { Ionicons } from "@expo/vector-icons";
-// import InputTextCard from "@/components/ui/InputTextCard";
-// import ButtonCard from "@/components/ui/ButtonCard";
-// import { signIn } from "@/services/auth.services";
-// import { signInSchema } from "@/schemas/auth/auth-sign-in.schema";
-// import { ZodError } from "zod";
-// import { useAuth } from "@/context/auth-context";
-
-// export default function SignInScreen() {
-//   const { login } = useAuth();
-
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [showPW, setShowPW] = useState(false);
-
-//   const [emailErr, setEmailErr] = useState<string | null | boolean>(false);
-//   const [passErr, setPassErr] = useState<string | null | boolean>(false);
-//   const [loading, setLoading] = useState(false);
-  
-//   const validate = (field: "email" | "password", val: string) => {
-//     try {
-//       signInSchema.pick({ [field]: true } as never ).parse({ [field]: val });
-//       field === "email" ? setEmailErr(null) : setPassErr(null);
-//     } catch (e) {
-//       if (e instanceof ZodError) {
-//         const msg = e.errors[0]?.message || "Invalide";
-//         field === "email" ? setEmailErr(msg) : setPassErr(msg);
-//       }
-//     }
-//   };
-
-  
-//   const handleSubmit = async () => {
-//     try {
-//       await signInSchema.parseAsync({ email, password });
-//       setEmailErr(null);
-//       setPassErr(null);
-//     } catch (e) {
-//       if (e instanceof ZodError) {
-//         e.errors.forEach((err) => {
-//           if (err.path[0] === "email") setEmailErr(err.message);
-//           if (err.path[0] === "password") setPassErr(err.message);
-//         });
-//       }
-//       return;
-//     }
-
-//     setLoading(true);
-//     const res = await signIn({ email, password });
-//     setLoading(false);
-
-//     if (res.success && res.token) {
-//       await login(res.token);
-//       router.replace("/(tabs)");
-//     } else {
-//       Alert.alert("Erreur", res.message || "Email ou mot de passe invalide.");
-//     }
-//   };
-
-  
-//   return (
-//     <>
-//       <Stack.Screen options={{ headerShown: false }} />
-
-//       <View className="flex-1 bg-white p-6">
-//         <View className="flex-1 justify-center items-center">
-//           <Ionicons name="lock-closed-outline" size={64} color="#4f46e5" />
-//           <Text className="mt-4 text-3xl font-extrabold text-blue-800">
-//             Bienvenue !
-//           </Text>
-//           <Text className="text-base text-gray-600 mb-8 text-center">
-//             Connectez‑vous pour continuer
-//           </Text>
-
-//           <View className="w-full max-w-md">
-//             {/* Email */}
-//             <InputTextCard
-//               title="Email"
-//               placeholder="Entrez votre email"
-//               value={email}
-//               onChangeText={(v) => {
-//                 setEmail(v);
-//                 validate("email", v);
-//               }}
-//               isValid={emailErr === null}
-//               messageStatus={emailErr}
-//             />
-
-//             <View className="h-4" />
-
-//             {/* Mot de passe */}
-//             <InputTextCard
-//               title="Mot de passe"
-//               placeholder="Entrez votre mot de passe"
-//               value={password}
-//               onChangeText={(v) => {
-//                 setPassword(v);
-//                 validate("password", v);
-//               }}
-//               secureTextEntry={!showPW}
-//               isPassword
-//               onPressSecure={() => setShowPW(!showPW)}
-//               isValid={passErr === null}
-//               messageStatus={passErr}
-//             />
-
-//             <View className="h-6" />
-
-//             {/* Bouton / loader */}
-//             {loading ? (
-//               <View className="w-full py-3 rounded-xl bg-indigo-600 items-center">
-//                 <ActivityIndicator color="#fff" />
-//               </View>
-//             ) : (
-//               <ButtonCard
-//                 title="Se connecter"
-//                 onPress={handleSubmit}
-//                 containerStyle="w-full py-3"
-//                 textStyle="text-lg"
-//               />
-//             )}
-
-//             {/* Liens annexes */}
-//             <TouchableOpacity
-//               className="mt-6"
-//               onPress={() => router.push("/auth/forgot-password")}
-//             >
-//               <Text className="text-blue-600 text-center font-semibold">
-//                 Mot de passe oublié ?
-//               </Text>
-//             </TouchableOpacity>
-
-//             <View className="mt-8 flex-row justify-center items-center">
-//               <Text className="text-gray-600">Pas encore de compte ? </Text>
-//               <TouchableOpacity onPress={() => router.push("/auth/sign-up")}>
-//                 <Text className="text-blue-600 font-semibold">
-//                   {" "}
-//                   Inscrivez‑vous
-//                 </Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         </View>
-//       </View>
-//     </>
-//   );
-// }
-
-// app/auth/sign-in.tsx (Note: The original path `app/(tabs)/auth/sign-in.tsx` looks incorrect based on your `_layout.tsx` which has `<Stack.Screen name="auth" />`. Assuming it should be `app/auth/sign-in.tsx`)
 import React, { useEffect } from "react";
 import {
   View,
@@ -164,13 +5,13 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
-  Keyboard,
 } from "react-native";
 import { Stack, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import InputTextCard from "@/components/ui/InputTextCard";
 import ButtonCard from "@/components/ui/ButtonCard";
-import { useSignIn } from "@/hooks/auth/useSignIn"; // Import the custom hook
+import { useSignIn } from "@/hooks/auth/useSignIn";
+
 
 export default function SignInScreen() {
   const {
@@ -181,25 +22,21 @@ export default function SignInScreen() {
     passErr,
     isSigningIn,
     signInError,
-    token, // Get token from the hook, which gets it from Redux
+    token,
     handleChangeEmail,
     handleChangePassword,
     toggleShowPassword,
     handleSubmit,
   } = useSignIn();
 
-  // Handle navigation after sign-in attempt
   useEffect(() => {
-    // If sign-in is successful and we have a token, navigate
     if (!isSigningIn && token) {
       router.replace("/(tabs)");
     }
-    // If sign-in failed, show an alert with the error message
     if (!isSigningIn && signInError) {
       Alert.alert("Erreur", signInError);
     }
   }, [isSigningIn, token, signInError]);
-
 
   return (
     <>
@@ -216,48 +53,44 @@ export default function SignInScreen() {
           </Text>
 
           <View className="w-full max-w-md">
-            {/* Email */}
             <InputTextCard
               title="Email"
               placeholder="Entrez votre email"
               value={email}
-              onChangeText={handleChangeEmail} // Use handleChangeEmail from hook
+              onChangeText={handleChangeEmail}
               isValid={emailErr === null}
               messageStatus={emailErr}
             />
 
             <View className="h-4" />
 
-            {/* Mot de passe */}
             <InputTextCard
               title="Mot de passe"
               placeholder="Entrez votre mot de passe"
               value={password}
-              onChangeText={handleChangePassword} // Use handleChangePassword from hook
+              onChangeText={handleChangePassword}
               secureTextEntry={!showPW}
               isPassword
-              onPressSecure={toggleShowPassword} // Use toggleShowPassword from hook
+              onPressSecure={toggleShowPassword}
               isValid={passErr === null}
               messageStatus={passErr}
             />
 
             <View className="h-6" />
 
-            {/* Bouton / loader */}
-            {isSigningIn ? ( // Use isSigningIn from hook
+            {isSigningIn ? (
               <View className="w-full py-3 rounded-xl bg-indigo-600 items-center">
                 <ActivityIndicator color="#fff" />
               </View>
             ) : (
               <ButtonCard
                 title="Se connecter"
-                onPress={handleSubmit} // Use handleSubmit from hook
+                onPress={handleSubmit}
                 containerStyle="w-full py-3"
                 textStyle="text-lg"
               />
             )}
 
-            {/* Liens annexes */}
             <TouchableOpacity
               className="mt-6"
               onPress={() => router.push("/auth/forgot-password")}

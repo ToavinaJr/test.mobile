@@ -1,4 +1,3 @@
-// hooks/auth/useSignIn.tsx
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ZodError } from 'zod';
@@ -15,15 +14,13 @@ export const useSignIn = () => {
   const [password, setPassword] = useState('');
   const [showPW, setShowPW] = useState(false);
 
-  const [emailErr, setEmailErr] = useState<string | null>(null);
-  const [passErr, setPassErr] = useState<string | null>(null);
+  const [emailErr, setEmailErr] = useState<string | null>("");
+  const [passErr, setPassErr] = useState<string | null>("");
 
   useEffect(() => {
     if (signInError) {
       dispatch(clearAuthError());
     }
-    setEmailErr(null);
-    setPassErr(null);
   }, []);
 
   const validateField = useCallback((field: 'email' | 'password', value: string) => {
