@@ -1,12 +1,13 @@
+// app/_layout.tsx
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/context/auth-context';
 import { useColorScheme } from '@/components/useColorScheme';
-import './global.css'
 import { Provider } from 'react-redux';
 import { store } from '@/store';
+import './global.css'
 
 SplashScreen.preventAutoHideAsync();
 

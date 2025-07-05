@@ -1,6 +1,5 @@
 import { SignInFormData, SignUpFormData, User } from '@/types';
 import { storage } from './storage.services';
-import * as SecureStore from 'expo-secure-store';
 
 const USERS_KEY = 'allUsers';
 const TOKEN_KEY = 'userToken';
@@ -69,20 +68,20 @@ export const signIn = async ({ email, password }: SignInFormData) => {
   const token = `simulated_token_${user.id}_${Date.now()}`;
   const userDetails = { id: user.id, name: user.name, email: user.email };
 
-  await SecureStore.setItemAsync(TOKEN_KEY, token);
+  await storage.set(TOKEN_KEY, token);
   await storage.set(DETAILS_KEY, userDetails);
 
   return { success: true, token, user: userDetails };
 };
 
-export const getUserToken = () => SecureStore.getItemAsync(TOKEN_KEY);
+export const getUserToken = () => storage.get<string>(TOKEN_KEY);
 
 export const getUserDetails = () =>
   storage.get<{ id: string; name: string; email: string }>(DETAILS_KEY);
 
 export const signOut = async () => {
   await Promise.all([
-    SecureStore.deleteItemAsync(TOKEN_KEY),
+    storage.remove(TOKEN_KEY),
     storage.multiRemove([DETAILS_KEY]),
   ]);
   return { success: true };
@@ -96,7 +95,6 @@ export const updateUser = async (payload: { name: string; email: string }) => {
   const idx = users.findIndex((u) => u.id === details.id);
   if (idx === -1) throw new Error('Utilisateur non trouvé');
 
-  // Vérifier si le nouvel email existe déjà pour un AUTRE utilisateur
   const newEmail = payload.email.trim().toLowerCase();
   const existingUserWithEmail = users.find(
     (u) => u.email === newEmail && u.id !== details.id
@@ -106,7 +104,7 @@ export const updateUser = async (payload: { name: string; email: string }) => {
     throw new Error('Cet email est déjà utilisé par un autre compte.');
   }
 
-  const updatedUser = { ...users[idx], ...payload, email: newEmail }; // Assurez-vous que l'email est en minuscules
+  const updatedUser = { ...users[idx], ...payload, email: newEmail };
   users[idx] = updatedUser;
 
   await storage.set(USERS_KEY, users);
