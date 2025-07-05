@@ -72,7 +72,6 @@ export const updateProductById = async (
   id: string,
   data: Partial<Product>,
 ): Promise<Product> => {
-  console.log('updateProductById called with:', id, data);
 
   const products = await loadProducts();
   const idx = products.findIndex((p) => p.id === id);

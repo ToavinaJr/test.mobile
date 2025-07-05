@@ -16,12 +16,7 @@ export default function RootLayout() {
 
   if (error) throw error;
   if (!loaded) return null;
-<<<<<<< HEAD
-  
-=======
 
-  // Cache le splash dès que la police ET l'auth sont prêtes (voir TabsLayout)
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
   SplashScreen.hideAsync();
 
   return (
@@ -30,10 +25,6 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
-<<<<<<< HEAD
-=======
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
         </Stack>
       </ThemeProvider>
     </AuthProvider>

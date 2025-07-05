@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 import { Product } from '@/types';
@@ -20,28 +19,6 @@ const ProductCard = ({
 
   return (
     <Pressable onPress={onShow} className="flex-1 bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden mx-1 mb-2">
-=======
-// components/products/ProductCard.tsx
-import { View, Text, Image, Pressable } from 'react-native';
-import React from 'react';
-import { Product } from '@/types';
-import { Ionicons, Feather } from '@expo/vector-icons'; // expo install @expo/vector-icons
-
-const ProductCard = ({
-  id,
-  name,
-  description,
-  price,
-  category,
-  imageUrl,
-  isActive,
-}: Product) => {
-  const handleEdit = () => console.log(`Édition du produit #${id}`);
-  const handleDelete = () => console.log(`Suppression du produit #${id}`);
-
-  return (
-    <View className="flex-1 bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden mx-1 mb-2">
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
       <View className="relative">
         <Image source={{ uri: imageUrl }} className="w-full aspect-[4/3]" />
         {!isActive && (
@@ -74,38 +51,24 @@ const ProductCard = ({
 
           <View className="flex-row space-x-3 gap-2">
             <Pressable
-<<<<<<< HEAD
               disabled={!isActive}
               onPress={onEdit}
               className={`p-2 rounded-full  active:opacity-80 ${isActive ? 'bg-amber-500' : 'bg-gray-400 opacity-60'}`}
-=======
-              onPress={handleEdit}
-              className="p-2 rounded-full bg-amber-500 active:opacity-80 mr-1"
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
             >
               <Feather name="edit-2" size={16} color="#fff" />
             </Pressable>
 
             <Pressable
-<<<<<<< HEAD
               disabled={!isActive}
               onPress={onDelete}
               className={`p-2 rounded-full  active:opacity-80 ${isActive ? 'bg-blue-500' : 'bg-gray-400 opacity-60'}`}
-=======
-              onPress={handleDelete}
-              className="p-2 rounded-full bg-red-600 active:opacity-80"
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
             >
               <Ionicons name="trash-outline" size={18} color="#fff" />
             </Pressable>
           </View>
         </View>
       </View>
-<<<<<<< HEAD
     </Pressable>
-=======
-    </View>
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
   );
 };
 

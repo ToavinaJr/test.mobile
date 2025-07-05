@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-// app/(tabs)/products/[productId].tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -147,17 +145,3 @@ export default function ProductDetail() {
     </ScrollView>
   );
 }
-=======
-import { View, Text } from 'react-native'
-import React from 'react'
-
-const ProductDetail = () => {
-  return (
-    <View>
-      <Text>ProductDetail</Text>
-    </View>
-  )
-}
-
-export default ProductDetail
->>>>>>> 2a4e9a485be7f9d00d276af3916835e61861d3ec
