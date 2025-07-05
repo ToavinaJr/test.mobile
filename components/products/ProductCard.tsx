@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
-import { Product } from '@/types';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Product, ProductCategory } from '@/types';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
 type ProductCardProps = {
   product: Product;
@@ -9,13 +9,31 @@ type ProductCardProps = {
   onEdit?: () => void;
   onDelete?: () => void;
 };
+
+const categoryColors: Record<ProductCategory, string> = {
+  [ProductCategory.ELECTRONICS]: 'bg-blue-500',
+  [ProductCategory.CLOTHING]: 'bg-purple-500',
+  [ProductCategory.HOME_APPLIANCES]: 'bg-green-500',
+  [ProductCategory.BOOKS]: 'bg-red-500',
+  [ProductCategory.SPORTS]: 'bg-indigo-500',
+  [ProductCategory.FOOD]: 'bg-yellow-500',
+  [ProductCategory.BEAUTY]: 'bg-pink-500',
+  [ProductCategory.TOYS]: 'bg-teal-500',
+  [ProductCategory.AUTOMOTIVE]: 'bg-gray-500',
+  [ProductCategory.HEALTH]: 'bg-lime-500',
+  [ProductCategory.FURNITURE]: 'bg-orange-500',
+  [ProductCategory.OTHER]: 'bg-neutral-500',
+};
+
 const ProductCard = ({
   product,
   onShow,
   onEdit,
   onDelete,
 }: ProductCardProps) => {
-  const { id, name, description, price, imageUrl, category, isActive } = product;
+  const { name, description, price, imageUrl, category, isActive } = product;
+
+  const categoryColorClass = categoryColors[category] || 'bg-gray-500';
 
   return (
     <Pressable onPress={onShow} className="flex-1 bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden mx-1 mb-2">
@@ -29,7 +47,7 @@ const ProductCard = ({
       </View>
 
       <View className="p-3">
-        <Text className="text-xs text-blue-800 font-semibold bg-blue-100 rounded-full px-2 py-1 self-start">
+        <Text className={`text-xs text-white font-semibold rounded-full px-2 py-1 self-start ${categoryColorClass}`}>
           {category}
         </Text>
 
@@ -53,7 +71,7 @@ const ProductCard = ({
             <Pressable
               disabled={!isActive}
               onPress={onEdit}
-              className={`p-2 rounded-full  active:opacity-80 ${isActive ? 'bg-amber-500' : 'bg-gray-400 opacity-60'}`}
+              className={`p-2 rounded-full  active:opacity-80 bg-amber-500`}
             >
               <Feather name="edit-2" size={16} color="#fff" />
             </Pressable>
@@ -61,7 +79,7 @@ const ProductCard = ({
             <Pressable
               disabled={!isActive}
               onPress={onDelete}
-              className={`p-2 rounded-full  active:opacity-80 ${isActive ? 'bg-blue-500' : 'bg-gray-400 opacity-60'}`}
+              className={`p-2 rounded-full  active:opacity-80 bg-[#4f46e5]`}
             >
               <Ionicons name="trash-outline" size={18} color="#fff" />
             </Pressable>

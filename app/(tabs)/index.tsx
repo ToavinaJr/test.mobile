@@ -19,6 +19,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useProducts } from '@/hooks/product/useProducts';
 import { Ionicons } from '@expo/vector-icons';
 import PaginationButton from '@/components/ui/PaginationButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ProductsHeader = React.memo(
   ({
@@ -107,6 +108,7 @@ export default function HomeScreen() {
     return (
       <View className="flex-row items-center justify-center my-6 px-3">
         {/* ◀ Précédent */}
+        
         <PaginationButton
           label="◀"
           onPress={() => handlePageChange(currentPage - 1)}
@@ -154,11 +156,9 @@ export default function HomeScreen() {
               router.push(`/products/${item.id}`);
             }}
             onDelete={() =>  {
-              if (!item.isActive) return;
               router.push(`/products/delete/${item.id}`);
             }}
             onEdit={() => {
-              if (!item.isActive) return;
               router.push(`/products/edit/${item.id}`)}}
           />
         )}
